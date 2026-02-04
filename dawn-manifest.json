@@ -1,0 +1,24 @@
+{
+  "name": "Dawn — Join the 5am Club",
+  "short_name": "Dawn",
+  "description": "Shift your wake time from 8am to 5am in 15 days. Join the 5am Club.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "dawn-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "dawn-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

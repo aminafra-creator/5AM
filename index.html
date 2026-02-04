@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  
+  <!-- PWA Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Dawn">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="Dawn — Join the 5am Club. Shift your wake time in 18 days.">
+  
+  <link rel="manifest" href="dawn-manifest.json">
+  <link rel="apple-touch-icon" href="dawn-icon-192.png">
+  
+  <title>Dawn — 5am Club</title>
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    :root {
+      /* Night Mode (Default) */
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --bg-card: rgba(30, 41, 59, 0.7);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --amber: #f59e0b;
+      --amber-soft: rgba(245, 158, 11, 0.15);
+      --orange: #f97316;
+      --green: #22c55e;
+      --green-soft: rgba(34, 197, 94, 0.15);
+      --indigo: #6366f1;
+      --indigo-soft: rgba(99, 102, 241, 0.15);
+      --blue: #3b82f6;
+      --red: #ef4444;
+      --safe-top: env(safe-area-inset-top);
+      --safe-bottom: env(safe-area-inset-bottom);
+      
+      /* Font sizes - LARGER */
+      --font-xs: 13px;
+      --font-sm: 14px;
+      --font-base: 16px;
+      --font-lg: 18px;
+      --font-xl: 22px;
+      --font-2xl: 28px;
+      --font-3xl: 36px;
+    }
+    
+    /* Day Mode Theme */
+    body.day-mode {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #e2e8f0;
+      --bg-tertiary: #cbd5e1;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --amber-soft: rgba(245, 158, 11, 0.12);
+      --green-soft: rgba(34, 197, 94, 0.12);
+      --indigo-soft: rgba(99, 102, 241, 0.12);
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      padding: calc(var(--safe-top) + 16px) 16px calc(var(--safe-bottom) + 90px) 16px;
+      overflow-x: hidden;
+      font-size: var(--font-base);
+      line-height: 1.5;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    
+    .container { max-width: 480px; margin: 0 auto; }
+    
+    /* Header */
+    .header { text-align: center; margin-bottom: 20px; }
+    .header h1 {
+      font-size: var(--font-3xl);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--amber), var(--orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header .tagline { color: var(--text-muted); font-size: var(--font-base); margin-top: 4px; }
+    
+    /* Theme Toggle */
+    .theme-toggle {
+      position: absolute;
+      top: calc(var(--safe-top) + 16px);
+      right: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--bg-tertiary);
+      border-radius: 50px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: var(--font-sm);
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+    
+    .theme-toggle:active { transform: scale(0.95); }
+    .theme-toggle .icon { font-size: 18px; }
+    
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(51, 65, 85, 0.4);
+      transition: background 0.3s ease, border 0.3s ease;
+    }
+    
+    body.day-mode .card {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .card-label {
+      font-size: var(--font-xs);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .card-label .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    
+    .dot.amber { background: var(--amber); }
+    .dot.green { background: var(--green); }
+    .dot.indigo { background: var(--indigo); }
+    .dot.blue { background: var(--blue); }
+    
+    /* Phase Banner */
+    .phase-banner {
+      background: var(--amber-soft);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .phase-info h2 {
+      font-size: var(--font-xl);
+      font-weight: 700;
+      color: var(--amber);
+    }
+    
+    .phase-info p {
+      font-size: var(--font-sm);
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    
+    .streak-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 158, 11, 0.2);
+      padding: 10px 16px;
+      border-radius: 20px;
+      font-size: var(--font-base);
+      font-weight: 600;
+      color: var(--orange);
+    }
+    
+    /* Time Targets */
+    .time-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    
+    .time-box {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    body.day-mode .time-box {
+      background: var(--bg-secondary);
+    }
+    
+    .time-box .icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    
+    .time-box .label {
+      font-size: var(--font-xs);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .time-box .time {
+      font-size: var(--font-2xl);
+      font-weight: 700;
+      margin-top: 6px;
+    }
+    
+    .time-box.wake .time { color: var(--amber); }
+    .time-box.bed .time { color: var(--indigo); }
+    
+    /* Progress Ring */
+    .progress-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .progress-text h3 {
+      font-size: var(--font-3xl);
+      font-weight: 700;
+    }
+    
+    .progress-text p {
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+    }
+    
+    .ring-container {
+      position: relative;
+      width: 100px;
+      height: 100px;
+    }
+    
+    .ring-container svg { transform: rotate(-90deg); }
+    .ring-bg { stroke: var(--bg-tertiary); }
+    .ring-fg { 
+      stroke: url(#ringGradient); 
+      stroke-linecap: round; 
+      transition: stroke-dasharray 0.5s ease; 
+    }
+    
+    .ring-percent {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-xl);
+      font-weight: 700;
+    }
+    
+    /* Alert */
+    .alert {
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    
+    .alert.morning { background: var(--amber-soft); border: 1px solid rgba(245, 158, 11, 0.25); }
+    .alert.afternoon { background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.25); }
+    .alert.evening { background: var(--indigo-soft); border: 1px solid rgba(99, 102, 241, 0.25); }
+    
+    .alert-icon { font-size: 28px; }
+    .alert-content h3 { font-size: var(--font-lg); font-weight: 600; }
+    .alert-content p { font-size: var(--font-sm); color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
+    
+    /* Habit Grid */
+    .habit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    
+    .habit-btn {
+      background: var(--bg-tertiary);
+      border: 2px solid transparent;
+      border-radius: 14px;
+      padding: 18px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .habit-btn:active { transform: scale(0.95); }
+    .habit-btn.done { background: var(--green-soft); border-color: var(--green); }
+    
+    .habit-btn .icon { font-size: 28px; }
+    .habit-btn .label { font-size: var(--font-xs); color: var(--text-secondary); text-align: center; }
+    .habit-btn.done .label { color: var(--green); }
+    
+    /* Ratings */
+    .rating-row {
+      margin-bottom: 18px;
+    }
+    
+    .rating-row:last-child { margin-bottom: 0; }
+    
+    .rating-label {
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    
+    .rating-buttons {
+      display: flex;
+      gap: 6px;
+    }
+    
+    .rating-btn {
+      flex: 1;
+      padding: 14px 0;
+      background: var(--bg-tertiary);
+      border: none;
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: var(--font-sm);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    
+    .rating-btn:active { transform: scale(0.9); }
+    .rating-btn.active.sleep { background: var(--indigo); }
+    .rating-btn.active.energy { background: var(--amber); }
+    
+    /* Complete Button */
+    .day-summary-card {
+      border: 2px solid var(--amber-soft);
+    }
+    
+    .day-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: var(--font-base);
+      color: var(--text-muted);
+    }
+    
+    .checklist-item.done {
+      color: var(--green);
+    }
+    
+    .check-icon {
+      font-size: 20px;
+      width: 24px;
+      text-align: center;
+    }
+    
+    .checklist-item.done .check-icon {
+      color: var(--green);
+    }
+    
+    .complete-btn {
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--green), #10b981);
+      border: none;
+      border-radius: 16px;
+      color: white;
+      font-size: var(--font-lg);
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+    
+    .complete-btn:active { transform: scale(0.98); }
+    .complete-btn:disabled { 
+      opacity: 0.4; 
+      pointer-events: none;
+      background: var(--bg-tertiary);
+    }
+    
+    .btn-arrow {
+      font-size: var(--font-xl);
+      transition: transform 0.2s ease;
+    }
+    
+    .complete-btn:not(:disabled):hover .btn-arrow {
+      transform: translateX(4px);
+    }
+    
+    .complete-hint {
+      text-align: center;
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+      margin-top: 12px;
+    }
+    
+    .complete-hint.ready {
+      color: var(--green);
+    }
+    
+    /* Phase Timeline */
+    .phase-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    
+    .phase-item.current { background: var(--amber-soft); }
+    
+    .phase-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--font-lg);
+      flex-shrink: 0;
+    }
+    
+    .phase-item.complete .phase-num { background: var(--green); }
+    .phase-item.current .phase-num { background: var(--amber); color: var(--bg-primary); }
+    
+    .phase-details { flex: 1; }
+    .phase-details h4 { font-size: var(--font-base); font-weight: 600; }
+    .phase-details p { font-size: var(--font-sm); color: var(--text-muted); }
+    
+    .phase-badge {
+      font-size: var(--font-xs);
+      background: var(--amber);
+      color: var(--bg-primary);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+    
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    
+    .stat-box {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    body.day-mode .stat-box {
+      background: var(--bg-secondary);
+    }
+    
+    .stat-value {
+      font-size: var(--font-2xl);
+      font-weight: 700;
+    }
+    
+    .stat-value.amber { color: var(--amber); }
+    .stat-value.green { color: var(--green); }
+    .stat-value.indigo { color: var(--indigo); }
+    .stat-value.orange { color: var(--orange); }
+    
+    .stat-label {
+      font-size: var(--font-xs);
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    
+    /* Log History */
+    .log-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .log-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+    
+    .log-item:active { transform: scale(0.98); }
+    
+    .log-date {
+      flex: 1;
+    }
+    
+    .log-date strong {
+      display: block;
+      font-size: var(--font-base);
+      font-weight: 600;
+    }
+    
+    .log-date span {
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+    }
+    
+    .log-stats {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    
+    .log-stat {
+      text-align: center;
+    }
+    
+    .log-stat .value {
+      font-size: var(--font-lg);
+      font-weight: 700;
+      color: var(--amber);
+    }
+    
+    .log-stat .label {
+      font-size: var(--font-xs);
+      color: var(--text-muted);
+    }
+    
+    .log-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .log-action-btn {
+      background: var(--bg-secondary);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    
+    .log-action-btn:active { transform: scale(0.9); }
+    .log-action-btn.delete { background: rgba(239, 68, 68, 0.15); }
+    
+    /* Edit Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .modal {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      padding: 24px;
+      width: calc(100% - 32px);
+      max-width: 400px;
+      transform: translateY(20px);
+      transition: transform 0.2s ease;
+    }
+    
+    .modal-overlay.show .modal {
+      transform: translateY(0);
+    }
+    
+    .modal h3 {
+      font-size: var(--font-xl);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .modal-field {
+      margin-bottom: 16px;
+    }
+    
+    .modal-field label {
+      display: block;
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    
+    .modal-field input, .modal-field select {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: var(--font-base);
+      font-family: inherit;
+    }
+    
+    .modal-field input:focus, .modal-field select:focus {
+      outline: none;
+      border-color: var(--amber);
+    }
+    
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    
+    .modal-btn {
+      flex: 1;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      font-size: var(--font-base);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .modal-btn:active { transform: scale(0.95); }
+    
+    .modal-btn.cancel {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+    
+    .modal-btn.save {
+      background: var(--amber);
+      color: var(--bg-primary);
+    }
+    
+    .modal-btn.delete {
+      background: var(--red);
+      color: white;
+    }
+    
+    /* Export Section */
+    .export-buttons {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .export-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 14px;
+      border: none;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: var(--font-sm);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .export-btn:active { transform: scale(0.95); }
+    .export-btn .icon { font-size: 28px; }
+    
+    .export-btn.whatsapp { background: #25D366; color: white; }
+    .export-btn.email { background: var(--indigo); color: white; }
+    .export-btn.download { background: var(--bg-tertiary); color: var(--text-primary); }
+    
+    .download-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    
+    .download-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px;
+      background: var(--bg-tertiary);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+    
+    .download-btn:active { transform: scale(0.98); background: var(--bg-secondary); }
+    .download-btn .icon { font-size: 32px; }
+    .download-btn .info strong { display: block; font-size: var(--font-base); color: var(--text-primary); }
+    .download-btn .info span { font-size: var(--font-sm); color: var(--text-muted); }
+    
+    /* Navigation */
+    .nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(51, 65, 85, 0.4);
+      display: flex;
+      justify-content: space-around;
+      padding: 14px 16px calc(var(--safe-bottom) + 14px) 16px;
+      transition: background 0.3s ease;
+    }
+    
+    body.day-mode .nav {
+      background: rgba(248, 250, 252, 0.95);
+      border-top-color: rgba(203, 213, 225, 0.5);
+    }
+    
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      padding: 10px 18px;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+    
+    .nav-btn.active { color: var(--amber); background: var(--amber-soft); }
+    .nav-btn .icon { font-size: 24px; }
+    .nav-btn span { font-size: var(--font-xs); font-weight: 500; }
+    
+    /* Sections */
+    .section { display: none; }
+    .section.active { display: block; }
+    
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 110px;
+      left: 50%;
+      transform: translateX(-50%) translateY(50px);
+      background: var(--bg-secondary);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      border-radius: 50px;
+      padding: 14px 28px;
+      font-size: var(--font-base);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 300;
+    }
+    
+    body.day-mode .toast {
+      background: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    
+    /* Install Banner */
+    .install-banner {
+      position: fixed;
+      bottom: 95px;
+      left: 16px;
+      right: 16px;
+      background: var(--amber);
+      color: var(--bg-primary);
+      border-radius: 16px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 200;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    
+    .install-banner.hidden { display: none; }
+    .install-banner .icon { font-size: 32px; }
+    .install-banner .text { flex: 1; }
+    .install-banner .text strong { display: block; font-size: var(--font-base); }
+    .install-banner .text span { font-size: var(--font-sm); opacity: 0.8; }
+    
+    .install-banner .btn {
+      background: var(--bg-primary);
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      color: var(--amber);
+      font-size: var(--font-sm);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    .install-banner .close {
+      background: none;
+      border: none;
+      color: var(--bg-primary);
+      font-size: 24px;
+      cursor: pointer;
+      opacity: 0.6;
+      padding: 4px;
+    }
+    
+    /* Hidden */
+    .hidden { display: none !important; }
+    
+    /* Science Tips */
+    .tips-content {
+      font-size: var(--font-base);
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    .tips-content p {
+      margin-bottom: 16px;
+    }
+    
+    .tips-content p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .tips-content strong {
+      color: var(--text-primary);
+    }
+    
+    /* Wake Time Input */
+    .wake-input-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .wake-input-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    
+    .wake-field {
+      flex: 1;
+    }
+    
+    .wake-field label {
+      display: block;
+      font-size: var(--font-base);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    
+    .wake-hint {
+      display: block;
+      font-size: var(--font-xs);
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    
+    .time-input {
+      padding: 14px 16px;
+      background: var(--bg-tertiary);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: var(--font-lg);
+      font-weight: 700;
+      font-family: inherit;
+      text-align: center;
+      min-width: 120px;
+      transition: all 0.2s ease;
+    }
+    
+    .time-input:focus {
+      outline: none;
+      border-color: var(--amber);
+    }
+    
+    body.day-mode .time-input {
+      background: var(--bg-secondary);
+    }
+    
+    .wake-comparison {
+      padding: 16px 18px;
+      border-radius: 12px;
+      font-size: var(--font-base);
+      text-align: center;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    
+    .wake-comparison.on-target {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+    
+    .wake-comparison.early {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+    
+    .wake-comparison.late {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+    }
+    
+    .wake-comparison.empty {
+      background: var(--bg-tertiary);
+      color: var(--text-muted);
+    }
+    
+    .wake-comparison .snooze-time {
+      display: block;
+      margin-top: 8px;
+      font-size: var(--font-sm);
+      opacity: 0.85;
+    }
+    
+    /* Bedtime Input */
+    .bed-input-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--bg-tertiary);
+    }
+  </style>
+</head>
+<body>
+  <!-- Install Banner -->
+  <div class="install-banner hidden" id="install-banner">
+    <span class="icon">☀️</span>
+    <div class="text">
+      <strong>Install Dawn</strong>
+      <span>Add to home screen</span>
+    </div>
+    <button class="btn" id="install-btn">Install</button>
+    <button class="close" id="install-close">×</button>
+  </div>
+  
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
+    <span class="icon" id="theme-icon">☀️</span>
+    <span id="theme-label">Day</span>
+  </button>
+
+  <div class="container">
+    <div class="header">
+      <h1>Dawn</h1>
+      <p class="tagline">Join the 5am Club • 15 Day Journey</p>
+    </div>
+    
+    <!-- TODAY SECTION -->
+    <div id="today-section" class="section active">
+      <!-- Phase Banner -->
+      <div class="phase-banner">
+        <div class="phase-info">
+          <h2 id="phase-title">Day 1 • Phase 1</h2>
+          <p id="phase-subtitle">8:00 AM → 5:00 AM</p>
+        </div>
+        <div class="streak-badge">
+          <span>🔥</span>
+          <span id="streak-count">0</span>
+        </div>
+      </div>
+      
+      <!-- Time Targets -->
+      <div class="card">
+        <div class="card-label"><div class="dot amber"></div>Today's Targets</div>
+        <div class="time-grid">
+          <div class="time-box wake">
+            <div class="icon">☀️</div>
+            <div class="label">Target Wake</div>
+            <div class="time" id="target-wake">8:00 AM</div>
+          </div>
+          <div class="time-box bed">
+            <div class="icon">🌙</div>
+            <div class="label">Target Bed</div>
+            <div class="time" id="target-bed">12:00 AM</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Actual Wake Time -->
+      <div class="card">
+        <div class="card-label"><div class="dot green"></div>Log Your Morning</div>
+        <div class="wake-input-section">
+          <div class="wake-input-row">
+            <div class="wake-field">
+              <label>Woke up at:</label>
+              <span class="wake-hint">When you first opened your eyes</span>
+            </div>
+            <input type="time" id="actual-wake-time" class="time-input">
+          </div>
+          <div class="wake-input-row">
+            <div class="wake-field">
+              <label>Got out of bed:</label>
+              <span class="wake-hint">When you actually got up</span>
+            </div>
+            <input type="time" id="out-of-bed-time" class="time-input">
+          </div>
+          <div class="wake-comparison" id="wake-comparison"></div>
+        </div>
+      </div>
+      
+      <!-- Alert -->
+      <div class="card alert morning" id="time-alert">
+        <span class="alert-icon" id="alert-icon">☀️</span>
+        <div class="alert-content">
+          <h3 id="alert-title">Morning Priority</h3>
+          <p id="alert-text">Get bright light NOW. This is the #1 factor for shifting your rhythm.</p>
+        </div>
+      </div>
+      
+      <!-- Progress -->
+      <div class="card">
+        <div class="card-label"><div class="dot green"></div>Today's Progress</div>
+        <div class="progress-section">
+          <div class="progress-text">
+            <h3><span id="completed-count">0</span>/9</h3>
+            <p>habits completed</p>
+          </div>
+          <div class="ring-container">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#f59e0b"/>
+                  <stop offset="100%" stop-color="#f97316"/>
+                </linearGradient>
+              </defs>
+              <circle class="ring-bg" cx="50" cy="50" r="42" fill="none" stroke-width="8"/>
+              <circle class="ring-fg" id="progress-ring" cx="50" cy="50" r="42" fill="none" stroke-width="8" stroke-dasharray="0 264"/>
+            </svg>
+            <div class="ring-percent"><span id="daily-percent">0</span>%</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Habits -->
+      <div class="card">
+        <div class="card-label"><div class="dot amber"></div>Quick Check</div>
+        <div class="habit-grid" id="habit-grid"></div>
+      </div>
+      
+      <!-- Ratings -->
+      <div class="card">
+        <div class="card-label"><div class="dot indigo"></div>Rate Today</div>
+        <div class="rating-row">
+          <div class="rating-label">Sleep Quality (1-10)</div>
+          <div class="rating-buttons" id="sleep-rating"></div>
+        </div>
+        <div class="rating-row">
+          <div class="rating-label">Energy Level (1-10)</div>
+          <div class="rating-buttons" id="energy-rating"></div>
+        </div>
+      </div>
+      
+      <!-- Day Summary & Complete -->
+      <div class="card day-summary-card">
+        <div class="card-label"><div class="dot amber"></div>Day <span id="summary-day-num">1</span> Progress</div>
+        <div class="day-checklist">
+          <div class="checklist-item" id="check-wake">
+            <span class="check-icon">○</span>
+            <span class="check-text">Log wake time</span>
+          </div>
+          <div class="checklist-item" id="check-outofbed">
+            <span class="check-icon">○</span>
+            <span class="check-text">Log out-of-bed time</span>
+          </div>
+          <div class="checklist-item" id="check-habits">
+            <span class="check-icon">○</span>
+            <span class="check-text">Complete 70% habits (<span id="habits-progress">0</span>/9)</span>
+          </div>
+        </div>
+        <button class="complete-btn" id="complete-btn" disabled>
+          <span id="complete-btn-text">Finish Day 1</span>
+          <span class="btn-arrow">→</span>
+        </button>
+        <p class="complete-hint" id="complete-hint">Complete the checklist above to unlock</p>
+      </div>
+    </div>
+    
+    <!-- JOURNEY SECTION -->
+    <div id="journey-section" class="section">
+      <div class="card">
+        <div class="card-label"><div class="dot amber"></div>Your 15-Day Journey</div>
+        <div class="phase-timeline" id="phase-timeline"></div>
+      </div>
+      
+      <div class="card">
+        <div class="card-label"><div class="dot green"></div>Your Stats</div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-value amber" id="stat-streak">0</div>
+            <div class="stat-label">Day Streak</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value green" id="stat-days">0</div>
+            <div class="stat-label">Days Logged</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value indigo" id="stat-phase">1/5</div>
+            <div class="stat-label">Current Phase</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value orange" id="stat-shifted">0m</div>
+            <div class="stat-label">Time Shifted</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Log History -->
+      <div class="card">
+        <div class="card-label"><div class="dot indigo"></div>Log History (Tap to Edit)</div>
+        <div class="log-list" id="log-list">
+          <p style="color: var(--text-muted); text-align: center; padding: 20px;">No logs yet. Complete your first day!</p>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-label"><div class="dot blue"></div>Science Tips</div>
+        <div class="tips-content">
+          <p><strong style="color: var(--amber);">☀️ Light is #1:</strong> 30+ min morning light shifts your clock more than anything else.</p>
+          <p><strong style="color: var(--indigo);">🌙 Darkness matters:</strong> Evening light pushes your clock later. Dim everything 90min before bed.</p>
+          <p><strong style="color: var(--green);">📅 Consistency:</strong> Same wake time daily—weekends included. One sleep-in sets you back days.</p>
+          <p><strong style="color: var(--blue);">☕ Caffeine cutoff:</strong> No coffee after 2 PM. Caffeine has a 6-hour half-life.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- SHARE SECTION -->
+    <div id="share-section" class="section">
+      <div class="card">
+        <div class="card-label"><div class="dot green"></div>Your Progress Summary</div>
+        <div class="stats-grid" style="margin-bottom: 0;">
+          <div class="stat-box">
+            <div class="stat-value amber" id="share-day">1</div>
+            <div class="stat-label">Current Day</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value orange" id="share-shifted">0m</div>
+            <div class="stat-label">Time Shifted</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value green" id="share-streak">0</div>
+            <div class="stat-label">Day Streak</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value indigo" id="share-target">5:00</div>
+            <div class="stat-label">Goal Wake</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-label"><div class="dot amber"></div>Share Your Progress</div>
+        <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Send your progress report to your clinic or accountability partner</p>
+        <div class="export-buttons">
+          <button class="export-btn whatsapp" onclick="exportToWhatsApp()">
+            <span class="icon">💬</span>
+            WhatsApp
+          </button>
+          <button class="export-btn email" onclick="exportToEmail()">
+            <span class="icon">📧</span>
+            Email
+          </button>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-label"><div class="dot indigo"></div>Download Report</div>
+        <div class="download-options">
+          <button class="download-btn" onclick="downloadReport('text')">
+            <span class="icon">📄</span>
+            <div class="info">
+              <strong>Text Report</strong>
+              <span>Human-readable summary</span>
+            </div>
+          </button>
+          <button class="download-btn" onclick="downloadReport('csv')">
+            <span class="icon">📊</span>
+            <div class="info">
+              <strong>CSV Spreadsheet</strong>
+              <span>For tracking & analysis</span>
+            </div>
+          </button>
+          <button class="download-btn" onclick="downloadReport('json')">
+            <span class="icon">💾</span>
+            <div class="info">
+              <strong>Full Backup (JSON)</strong>
+              <span>All your data</span>
+            </div>
+          </button>
+        </div>
+      </div>
+      
+      <div class="card" style="background: var(--green-soft); border-color: rgba(34, 197, 94, 0.2);">
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="font-size: 24px;">🔒</span>
+          <div>
+            <strong style="font-size: 14px; display: block; margin-bottom: 4px;">Your data is private</strong>
+            <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">All data stays on your phone. You choose what to share.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Navigation -->
+  <div class="nav">
+    <button class="nav-btn active" data-section="today">
+      <span class="icon">☀️</span>
+      <span>Today</span>
+    </button>
+    <button class="nav-btn" data-section="journey">
+      <span class="icon">📊</span>
+      <span>Journey</span>
+    </button>
+    <button class="nav-btn" data-section="share">
+      <span class="icon">📤</span>
+      <span>Share</span>
+    </button>
+  </div>
+  
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+  
+  <!-- Edit Modal -->
+  <div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+      <h3 id="modal-title">Edit Log</h3>
+      <div class="modal-field">
+        <label>Day Number</label>
+        <input type="number" id="edit-day" min="1" max="15" readonly>
+      </div>
+      <div class="modal-field">
+        <label>Woke Up At (eyes opened)</label>
+        <input type="time" id="edit-wake-time">
+      </div>
+      <div class="modal-field">
+        <label>Got Out of Bed At</label>
+        <input type="time" id="edit-out-of-bed-time">
+      </div>
+      <div class="modal-field">
+        <label>Habits Completed (out of 9)</label>
+        <input type="number" id="edit-habits" min="0" max="9">
+      </div>
+      <div class="modal-field">
+        <label>Sleep Quality (1-10)</label>
+        <input type="number" id="edit-sleep" min="0" max="10">
+      </div>
+      <div class="modal-field">
+        <label>Energy Level (1-10)</label>
+        <input type="number" id="edit-energy" min="0" max="10">
+      </div>
+      <div class="modal-buttons">
+        <button class="modal-btn cancel" onclick="closeEditModal()">Cancel</button>
+        <button class="modal-btn delete" onclick="deleteLog()">Delete</button>
+        <button class="modal-btn save" onclick="saveLog()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========== THEME ==========
+    function toggleTheme() {
+      const isDayMode = document.body.classList.toggle('day-mode');
+      localStorage.setItem('dawn-theme', isDayMode ? 'day' : 'night');
+      updateThemeButton(isDayMode);
+    }
+    
+    function updateThemeButton(isDayMode) {
+      document.getElementById('theme-icon').textContent = isDayMode ? '🌙' : '☀️';
+      document.getElementById('theme-label').textContent = isDayMode ? 'Night' : 'Day';
+    }
+    
+    function loadTheme() {
+      const saved = localStorage.getItem('dawn-theme');
+      if (saved) {
+        const isDayMode = saved === 'day';
+        document.body.classList.toggle('day-mode', isDayMode);
+        updateThemeButton(isDayMode);
+      } else {
+        // Auto-detect based on time of day
+        const hour = new Date().getHours();
+        const isDayMode = hour >= 6 && hour < 18;
+        document.body.classList.toggle('day-mode', isDayMode);
+        updateThemeButton(isDayMode);
+      }
+    }
+    
+    // ========== LOG EDITING ==========
+    let editingDate = null;
+    
+    function renderLogHistory() {
+      const logList = document.getElementById('log-list');
+      const entries = Object.entries(state.history).sort().reverse();
+      
+      if (entries.length === 0) {
+        logList.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No logs yet. Complete your first day!</p>';
+        return;
+      }
+      
+      logList.innerHTML = entries.map(([date, data]) => {
+        const d = new Date(date);
+        const dayName = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        const habitsCount = Object.values(data.habits || {}).filter(Boolean).length;
+        
+        // Calculate snooze time
+        let snoozeTime = 0;
+        if (data.actualWakeTime && data.outOfBedTime) {
+          const wake = inputValueToMinutes(data.actualWakeTime);
+          const outOfBed = inputValueToMinutes(data.outOfBedTime);
+          if (wake !== null && outOfBed !== null) {
+            snoozeTime = outOfBed - wake;
+          }
+        }
+        
+        // Calculate wake time difference from target
+        let wakeStatus = '';
+        let wakeColor = 'var(--text-muted)';
+        const outOfBedTime = data.outOfBedTime || data.actualWakeTime;
+        if (outOfBedTime && data.targetWakeTime) {
+          const actual = inputValueToMinutes(outOfBedTime);
+          const target = inputValueToMinutes(data.targetWakeTime);
+          if (actual !== null && target !== null) {
+            const diff = actual - target;
+            if (Math.abs(diff) <= 15) {
+              wakeStatus = '✓';
+              wakeColor = 'var(--green)';
+            } else if (diff < 0) {
+              wakeStatus = `-${Math.abs(diff)}m`;
+              wakeColor = 'var(--green)';
+            } else {
+              wakeStatus = `+${diff}m`;
+              wakeColor = 'var(--red)';
+            }
+          }
+        }
+        
+        // Format times for display
+        const wakeDisplay = data.actualWakeTime ? formatTimeFromInput(data.actualWakeTime) : '-';
+        const outOfBedDisplay = data.outOfBedTime ? formatTimeFromInput(data.outOfBedTime) : wakeDisplay;
+        
+        return `
+          <div class="log-item" onclick="openEditModal('${date}')">
+            <div class="log-date">
+              <strong>Day ${data.day || '?'}</strong>
+              <span>${dayName}</span>
+            </div>
+            <div class="log-stats">
+              <div class="log-stat">
+                <div class="value" style="color: ${wakeColor};">${outOfBedDisplay}</div>
+                <div class="label">${wakeStatus || 'Up'}</div>
+              </div>
+              <div class="log-stat">
+                <div class="value" style="color: ${snoozeTime > 10 ? 'var(--orange)' : 'var(--green)'};">${snoozeTime}m</div>
+                <div class="label">Snooze</div>
+              </div>
+              <div class="log-stat">
+                <div class="value">${habitsCount}/9</div>
+                <div class="label">Habits</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    function formatTimeFromInput(timeStr) {
+      if (!timeStr) return '-';
+      const [h, m] = timeStr.split(':').map(Number);
+      const period = h >= 12 ? 'PM' : 'AM';
+      const displayH = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+      return `${displayH}:${m.toString().padStart(2, '0')}`;
+    }
+    
+    function openEditModal(date) {
+      editingDate = date;
+      const data = state.history[date];
+      
+      document.getElementById('modal-title').textContent = `Edit Day ${data.day || '?'}`;
+      document.getElementById('edit-day').value = data.day || 1;
+      document.getElementById('edit-wake-time').value = data.actualWakeTime || '';
+      document.getElementById('edit-out-of-bed-time').value = data.outOfBedTime || data.actualWakeTime || '';
+      document.getElementById('edit-habits').value = Object.values(data.habits || {}).filter(Boolean).length;
+      document.getElementById('edit-sleep').value = data.sleepQuality || 0;
+      document.getElementById('edit-energy').value = data.energyLevel || 0;
+      
+      document.getElementById('edit-modal').classList.add('show');
+    }
+    
+    function closeEditModal() {
+      document.getElementById('edit-modal').classList.remove('show');
+      editingDate = null;
+    }
+    
+    function saveLog() {
+      if (!editingDate) return;
+      
+      const actualWakeTime = document.getElementById('edit-wake-time').value;
+      const outOfBedTime = document.getElementById('edit-out-of-bed-time').value;
+      const habitsCount = parseInt(document.getElementById('edit-habits').value) || 0;
+      const sleepQuality = parseInt(document.getElementById('edit-sleep').value) || 0;
+      const energyLevel = parseInt(document.getElementById('edit-energy').value) || 0;
+      
+      // Create habits object based on count
+      const habits = {};
+      HABITS.slice(0, habitsCount).forEach(h => habits[h.id] = true);
+      
+      state.history[editingDate] = {
+        ...state.history[editingDate],
+        actualWakeTime: actualWakeTime,
+        outOfBedTime: outOfBedTime,
+        habits: habits,
+        sleepQuality: sleepQuality,
+        energyLevel: energyLevel
+      };
+      
+      saveState();
+      renderLogHistory();
+      updateUI();
+      closeEditModal();
+      showToast('✓ Log updated');
+    }
+    
+    function deleteLog() {
+      if (!editingDate) return;
+      
+      const data = state.history[editingDate];
+      if (!confirm(`Delete log for Day ${data.day}?`)) return;
+      
+      delete state.history[editingDate];
+      
+      // Recalculate current day and streak
+      const daysLogged = Object.keys(state.history).length;
+      state.currentDay = Math.max(1, daysLogged + 1);
+      
+      // Recalculate streak
+      const sortedDates = Object.keys(state.history).sort().reverse();
+      let streak = 0;
+      const today = new Date();
+      for (let i = 0; i < sortedDates.length; i++) {
+        const logDate = new Date(sortedDates[i]);
+        const diffDays = Math.floor((today - logDate) / (1000 * 60 * 60 * 24));
+        if (diffDays === i || diffDays === i + 1) {
+          streak++;
+        } else {
+          break;
+        }
+      }
+      state.streak = streak;
+      
+      saveState();
+      renderLogHistory();
+      renderPhaseTimeline();
+      updateUI();
+      closeEditModal();
+      showToast('✓ Log deleted');
+    }
+
+    // ========== CONFIG ==========
+    const CONFIG = {
+      startWake: 8 * 60,    // 8:00 AM in minutes
+      targetWake: 5 * 60,   // 5:00 AM in minutes
+      shiftPerPhase: 36,    // 36 min shift per phase (180 min / 5 phases)
+      daysPerPhase: 3,
+      totalPhases: 5,       // 5 phases × 3 days = 15 days
+      sleepDuration: 8 * 60 // 8 hours sleep
+    };
+    
+    const HABITS = [
+      { id: 'light', name: 'Morning Light', icon: '☀️', time: 'morning', impact: 'critical', desc: 'Get bright light within 30 min of waking' },
+      { id: 'no_snooze', name: 'No Snooze', icon: '⏰', time: 'morning', impact: 'high', desc: 'Get up at first alarm' },
+      { id: 'exercise', name: 'Exercise', icon: '🏃', time: 'morning', impact: 'high', desc: '15-30 min morning activity' },
+      { id: 'breakfast', name: 'Early Breakfast', icon: '🍳', time: 'morning', impact: 'medium', desc: 'Eat within 1 hour of waking' },
+      { id: 'caffeine', name: 'No Late Caffeine', icon: '☕', time: 'afternoon', impact: 'high', desc: 'No coffee/tea after 2 PM' },
+      { id: 'dinner', name: 'Early Dinner', icon: '🍽️', time: 'evening', impact: 'medium', desc: 'Finish eating 3h before bed' },
+      { id: 'screens', name: 'Screens Off', icon: '📱', time: 'evening', impact: 'high', desc: 'No screens 1h before bed' },
+      { id: 'dim', name: 'Dim Lights', icon: '💡', time: 'evening', impact: 'high', desc: 'Dim all lights 90min before bed' },
+      { id: 'cool', name: 'Cool Room', icon: '❄️', time: 'evening', impact: 'medium', desc: 'Bedroom at 18-20°C' }
+    ];
+    
+    // ========== STATE ==========
+    let state = {
+      currentDay: 1,
+      streak: 0,
+      habits: {},
+      sleepQuality: 0,
+      energyLevel: 0,
+      actualWakeTime: '',
+      outOfBedTime: '',
+      history: {},
+      startDate: null
+    };
+    
+    // ========== HELPERS ==========
+    function formatTime(minutes) {
+      let h = Math.floor(minutes / 60);
+      let m = minutes % 60;
+      if (h < 0) h += 24;
+      if (h >= 24) h -= 24;
+      const period = h >= 12 ? 'PM' : 'AM';
+      const displayH = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+      return `${displayH}:${m.toString().padStart(2, '0')} ${period}`;
+    }
+    
+    function getPhase(day) {
+      return Math.min(Math.floor((day - 1) / CONFIG.daysPerPhase), CONFIG.totalPhases - 1);
+    }
+    
+    function getTargetWake(day) {
+      const phase = getPhase(day);
+      return CONFIG.startWake - (phase * CONFIG.shiftPerPhase);
+    }
+    
+    function getTargetBed(day) {
+      return getTargetWake(day) - CONFIG.sleepDuration;
+    }
+    
+    // ========== UI ==========
+    function updateUI() {
+      const phase = getPhase(state.currentDay);
+      const targetWake = getTargetWake(state.currentDay);
+      const targetBed = getTargetBed(state.currentDay);
+      const shifted = phase * CONFIG.shiftPerPhase;
+      
+      // Phase banner
+      document.getElementById('phase-title').textContent = `Day ${state.currentDay} • Phase ${phase + 1}`;
+      document.getElementById('phase-subtitle').textContent = `${formatTime(CONFIG.startWake)} → ${formatTime(CONFIG.targetWake)}`;
+      document.getElementById('streak-count').textContent = state.streak;
+      
+      // Time targets
+      document.getElementById('target-wake').textContent = formatTime(targetWake);
+      document.getElementById('target-bed').textContent = formatTime(targetBed);
+      
+      // Progress
+      const completedHabits = Object.values(state.habits).filter(Boolean).length;
+      const dailyProgress = Math.round((completedHabits / HABITS.length) * 100);
+      
+      document.getElementById('completed-count').textContent = completedHabits;
+      document.getElementById('daily-percent').textContent = dailyProgress;
+      document.getElementById('progress-ring').style.strokeDasharray = `${dailyProgress * 2.64} 264`;
+      
+      // Update checklist and button
+      document.getElementById('summary-day-num').textContent = state.currentDay;
+      document.getElementById('complete-btn-text').textContent = `Finish Day ${state.currentDay}`;
+      document.getElementById('habits-progress').textContent = completedHabits;
+      updateChecklist();
+      
+      // Alert based on time of day
+      updateAlert(targetBed);
+      
+      // Stats
+      document.getElementById('stat-streak').textContent = state.streak;
+      document.getElementById('stat-days').textContent = Object.keys(state.history).length;
+      document.getElementById('stat-phase').textContent = `${phase + 1}/5`;
+      document.getElementById('stat-shifted').textContent = `${shifted}m`;
+      
+      // Share stats
+      document.getElementById('share-day').textContent = state.currentDay;
+      document.getElementById('share-shifted').textContent = `${shifted}m`;
+      document.getElementById('share-streak').textContent = state.streak;
+      document.getElementById('share-target').textContent = formatTime(CONFIG.targetWake);
+    }
+    
+    function updateAlert(targetBed) {
+      const hour = new Date().getHours();
+      const alert = document.getElementById('time-alert');
+      const icon = document.getElementById('alert-icon');
+      const title = document.getElementById('alert-title');
+      const text = document.getElementById('alert-text');
+      
+      if (hour >= 5 && hour < 12) {
+        alert.className = 'card alert morning';
+        icon.textContent = '☀️';
+        title.textContent = 'Morning Priority';
+        text.textContent = 'Get bright light NOW. This is the #1 factor for shifting your rhythm.';
+      } else if (hour >= 12 && hour < 17) {
+        alert.className = 'card alert afternoon';
+        icon.textContent = '☕';
+        title.textContent = 'Afternoon Reminder';
+        text.textContent = 'No more caffeine after 2 PM. Start planning your wind-down routine.';
+      } else {
+        alert.className = 'card alert evening';
+        icon.textContent = '🌙';
+        title.textContent = 'Evening Wind-down';
+        const screenOff = targetBed + 60 < 0 ? targetBed + 60 + 1440 : targetBed + 60;
+        text.textContent = `Dim your lights. Screen-off time: ${formatTime(screenOff)}. Bedtime: ${formatTime(targetBed)}.`;
+      }
+    }
+    
+    function setupWakeTimeInput() {
+      const wakeInput = document.getElementById('actual-wake-time');
+      const outOfBedInput = document.getElementById('out-of-bed-time');
+      
+      // Set current values from state
+      if (state.actualWakeTime) {
+        wakeInput.value = state.actualWakeTime;
+      }
+      if (state.outOfBedTime) {
+        outOfBedInput.value = state.outOfBedTime;
+      }
+      
+      // Handle wake time changes
+      wakeInput.addEventListener('change', () => {
+        state.actualWakeTime = wakeInput.value;
+        // Auto-set out of bed to same time if not set
+        if (!state.outOfBedTime && state.actualWakeTime) {
+          state.outOfBedTime = state.actualWakeTime;
+          outOfBedInput.value = state.actualWakeTime;
+        }
+        saveState();
+        updateWakeComparison();
+        updateChecklist();
+      });
+      
+      // Handle out of bed time changes
+      outOfBedInput.addEventListener('change', () => {
+        state.outOfBedTime = outOfBedInput.value;
+        saveState();
+        updateWakeComparison();
+        updateChecklist();
+      });
+      
+      updateWakeComparison();
+      updateChecklist();
+    }
+    
+    function updateWakeComparison() {
+      const comparison = document.getElementById('wake-comparison');
+      const targetWake = getTargetWake(state.currentDay);
+      
+      if (!state.actualWakeTime) {
+        comparison.className = 'wake-comparison empty';
+        comparison.innerHTML = 'Enter your wake time above';
+        return;
+      }
+      
+      // Parse times
+      const wakeMinutes = inputValueToMinutes(state.actualWakeTime);
+      const outOfBedMinutes = state.outOfBedTime ? inputValueToMinutes(state.outOfBedTime) : wakeMinutes;
+      
+      // Calculate difference from target (use out of bed time as the "real" wake)
+      const diff = outOfBedMinutes - targetWake;
+      
+      // Calculate snooze/linger time
+      const snoozeTime = outOfBedMinutes - wakeMinutes;
+      
+      let statusText = '';
+      let statusClass = '';
+      
+      if (Math.abs(diff) <= 15) {
+        statusClass = 'on-target';
+        statusText = `✓ Right on target! Out of bed at ${formatTimeFromInput(state.outOfBedTime || state.actualWakeTime)}`;
+      } else if (diff < 0) {
+        statusClass = 'early';
+        statusText = `✓ ${Math.abs(diff)} min early! Great job!`;
+      } else {
+        statusClass = 'late';
+        statusText = `${diff} min late. Target was ${formatTime(targetWake)}`;
+      }
+      
+      // Add snooze info if there's a gap
+      let snoozeInfo = '';
+      if (snoozeTime > 0) {
+        if (snoozeTime <= 5) {
+          snoozeInfo = `<span class="snooze-time">⚡ ${snoozeTime} min to get up — great discipline!</span>`;
+        } else if (snoozeTime <= 15) {
+          snoozeInfo = `<span class="snooze-time">⏰ ${snoozeTime} min in bed after waking — try to reduce this</span>`;
+        } else {
+          snoozeInfo = `<span class="snooze-time">😴 ${snoozeTime} min snooze time — this delays your rhythm shift</span>`;
+        }
+      } else if (state.outOfBedTime) {
+        snoozeInfo = `<span class="snooze-time">⚡ No snooze — perfect!</span>`;
+      }
+      
+      comparison.className = `wake-comparison ${statusClass}`;
+      comparison.innerHTML = statusText + snoozeInfo;
+    }
+    
+    function timeToInputValue(minutes) {
+      if (!minutes && minutes !== 0) return '';
+      let h = Math.floor(minutes / 60);
+      let m = minutes % 60;
+      if (h < 0) h += 24;
+      if (h >= 24) h -= 24;
+      return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+    }
+    
+    function inputValueToMinutes(value) {
+      if (!value) return null;
+      const [h, m] = value.split(':').map(Number);
+      return h * 60 + m;
+    }
+    
+    function updateChecklist() {
+      const completedHabits = Object.values(state.habits).filter(Boolean).length;
+      const hasWakeTime = !!state.actualWakeTime;
+      const hasOutOfBed = !!state.outOfBedTime;
+      const hasEnoughHabits = completedHabits >= 6; // 70% of 9 = 6.3
+      
+      // Update wake time check
+      const checkWake = document.getElementById('check-wake');
+      if (hasWakeTime) {
+        checkWake.classList.add('done');
+        checkWake.querySelector('.check-icon').textContent = '✓';
+      } else {
+        checkWake.classList.remove('done');
+        checkWake.querySelector('.check-icon').textContent = '○';
+      }
+      
+      // Update out of bed check
+      const checkOutOfBed = document.getElementById('check-outofbed');
+      if (hasOutOfBed) {
+        checkOutOfBed.classList.add('done');
+        checkOutOfBed.querySelector('.check-icon').textContent = '✓';
+      } else {
+        checkOutOfBed.classList.remove('done');
+        checkOutOfBed.querySelector('.check-icon').textContent = '○';
+      }
+      
+      // Update habits check
+      const checkHabits = document.getElementById('check-habits');
+      if (hasEnoughHabits) {
+        checkHabits.classList.add('done');
+        checkHabits.querySelector('.check-icon').textContent = '✓';
+      } else {
+        checkHabits.classList.remove('done');
+        checkHabits.querySelector('.check-icon').textContent = '○';
+      }
+      
+      // Update button state
+      const allDone = hasWakeTime && hasOutOfBed && hasEnoughHabits;
+      const completeBtn = document.getElementById('complete-btn');
+      const hint = document.getElementById('complete-hint');
+      
+      completeBtn.disabled = !allDone;
+      
+      if (allDone) {
+        hint.textContent = '✓ Ready to submit!';
+        hint.classList.add('ready');
+      } else {
+        const remaining = [];
+        if (!hasWakeTime) remaining.push('wake time');
+        if (!hasOutOfBed) remaining.push('out-of-bed time');
+        if (!hasEnoughHabits) remaining.push(`${6 - completedHabits} more habits`);
+        hint.textContent = `Need: ${remaining.join(', ')}`;
+        hint.classList.remove('ready');
+      }
+    }
+    
+    function renderHabitGrid() {
+      const grid = document.getElementById('habit-grid');
+      const hour = new Date().getHours();
+      
+      let relevantHabits;
+      if (hour >= 5 && hour < 12) {
+        relevantHabits = HABITS.filter(h => h.time === 'morning');
+      } else if (hour >= 12 && hour < 17) {
+        relevantHabits = [...HABITS.filter(h => h.time === 'morning'), ...HABITS.filter(h => h.time === 'afternoon')];
+      } else {
+        relevantHabits = HABITS;
+      }
+      relevantHabits = relevantHabits.slice(0, 6);
+      
+      grid.innerHTML = relevantHabits.map(h => `
+        <button class="habit-btn ${state.habits[h.id] ? 'done' : ''}" data-id="${h.id}">
+          <span class="icon">${h.icon}</span>
+          <span class="label">${h.name.split(' ')[0]}</span>
+        </button>
+      `).join('');
+      
+      grid.querySelectorAll('.habit-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          state.habits[id] = !state.habits[id];
+          saveState();
+          updateUI();
+          renderHabitGrid();
+        });
+      });
+    }
+    
+    function renderRatings() {
+      ['sleep', 'energy'].forEach(type => {
+        const container = document.getElementById(`${type}-rating`);
+        container.innerHTML = Array.from({ length: 10 }, (_, i) => 
+          `<button class="rating-btn ${type} ${(type === 'sleep' ? state.sleepQuality : state.energyLevel) >= i + 1 ? 'active' : ''}" data-value="${i + 1}">${i + 1}</button>`
+        ).join('');
+        
+        container.querySelectorAll('.rating-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const value = parseInt(btn.dataset.value);
+            if (type === 'sleep') state.sleepQuality = value;
+            else state.energyLevel = value;
+            saveState();
+            renderRatings();
+          });
+        });
+      });
+    }
+    
+    function renderPhaseTimeline() {
+      const container = document.getElementById('phase-timeline');
+      const currentPhase = getPhase(state.currentDay);
+      
+      container.innerHTML = Array.from({ length: CONFIG.totalPhases }, (_, i) => {
+        const wake = CONFIG.startWake - (i * CONFIG.shiftPerPhase);
+        const isComplete = currentPhase > i;
+        const isCurrent = currentPhase === i;
+        
+        return `
+          <div class="phase-item ${isComplete ? 'complete' : ''} ${isCurrent ? 'current' : ''}">
+            <div class="phase-num">${isComplete ? '✓' : i + 1}</div>
+            <div class="phase-details">
+              <h4>Wake at ${formatTime(wake)}</h4>
+              <p>Days ${i * 3 + 1}-${(i + 1) * 3}</p>
+            </div>
+            ${isCurrent ? '<span class="phase-badge">NOW</span>' : ''}
+          </div>
+        `;
+      }).join('');
+    }
+    
+    // ========== EVENTS ==========
+    function bindEvents() {
+      // Navigation
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById(`${btn.dataset.section}-section`).classList.add('active');
+        });
+      });
+      
+      // Complete day
+      document.getElementById('complete-btn').addEventListener('click', completeDay);
+    }
+    
+    function completeDay() {
+      const completedHabits = Object.values(state.habits).filter(Boolean).length;
+      
+      // Double-check requirements (button should be disabled if not met)
+      if (!state.actualWakeTime || !state.outOfBedTime || completedHabits < 6) {
+        showToast('⚠️ Complete the checklist first!');
+        return;
+      }
+      
+      const today = new Date().toISOString().split('T')[0];
+      state.history[today] = {
+        habits: { ...state.habits },
+        sleepQuality: state.sleepQuality,
+        energyLevel: state.energyLevel,
+        actualWakeTime: state.actualWakeTime,
+        outOfBedTime: state.outOfBedTime,
+        targetWakeTime: timeToInputValue(getTargetWake(state.currentDay)),
+        day: state.currentDay,
+        phase: getPhase(state.currentDay)
+      };
+      
+      // Update streak based on habit completion
+      const dailyProgress = Math.round((completedHabits / HABITS.length) * 100);
+      if (dailyProgress >= 70) {
+        state.streak++;
+      } else {
+        state.streak = 0;
+      }
+      
+      const finishedDay = state.currentDay;
+      state.currentDay = Math.min(state.currentDay + 1, 15);
+      state.habits = {};
+      state.sleepQuality = 0;
+      state.energyLevel = 0;
+      state.actualWakeTime = '';
+      state.outOfBedTime = '';
+      
+      // Reset inputs
+      document.getElementById('actual-wake-time').value = '';
+      document.getElementById('out-of-bed-time').value = '';
+      
+      saveState();
+      updateUI();
+      renderHabitGrid();
+      renderRatings();
+      renderPhaseTimeline();
+      renderLogHistory();
+      updateWakeComparison();
+      updateChecklist();
+      
+      if (state.currentDay > 15) {
+        showToast('🎉 Congratulations! You completed the 5am Club!');
+      } else {
+        showToast(`✓ Day ${finishedDay} complete! Starting Day ${state.currentDay}`);
+      }
+    }
+    
+    // ========== EXPORT ==========
+    function generateTextReport() {
+      const phase = getPhase(state.currentDay);
+      const shifted = phase * CONFIG.shiftPerPhase;
+      const daysLogged = Object.keys(state.history).length;
+      
+      let report = `☀️ DAWN - 5AM CLUB PROGRESS\n`;
+      report += `━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+      report += `📅 Day ${state.currentDay} of 15\n`;
+      report += `🎯 Phase ${phase + 1} of 5\n`;
+      report += `⏰ Current target: Wake at ${formatTime(getTargetWake(state.currentDay))}\n\n`;
+      
+      report += `📊 STATS\n`;
+      report += `• Time shifted: ${shifted} minutes\n`;
+      report += `• Day streak: ${state.streak}\n`;
+      report += `• Days logged: ${daysLogged}\n\n`;
+      
+      report += `📈 WAKE TIME LOG\n`;
+      const recentDays = Object.entries(state.history).slice(-7);
+      recentDays.forEach(([date, data]) => {
+        const habitsCount = Object.values(data.habits || {}).filter(Boolean).length;
+        const wakeTime = data.actualWakeTime ? formatTimeFromInput(data.actualWakeTime) : '-';
+        const outOfBed = data.outOfBedTime ? formatTimeFromInput(data.outOfBedTime) : wakeTime;
+        const target = data.targetWakeTime ? formatTimeFromInput(data.targetWakeTime) : '-';
+        
+        // Calculate snooze
+        let snooze = 0;
+        if (data.actualWakeTime && data.outOfBedTime) {
+          snooze = inputValueToMinutes(data.outOfBedTime) - inputValueToMinutes(data.actualWakeTime);
+        }
+        
+        report += `• ${date}: Woke ${wakeTime}, Up ${outOfBed} (${snooze}m snooze), Target ${target}\n`;
+      });
+      
+      report += `\n━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+      report += `Goal: Wake at 5:00 AM\n`;
+      report += `Generated by Dawn - 5am Club Tracker`;
+      
+      return report;
+    }
+    
+    function generateCSV() {
+      let csv = 'Date,Day,Phase,Woke Up,Out of Bed,Target,Diff (min),Snooze (min),Habits,Sleep,Energy\n';
+      
+      Object.entries(state.history).sort().forEach(([date, data]) => {
+        const habitsCount = Object.values(data.habits || {}).filter(Boolean).length;
+        const actualWake = data.actualWakeTime || '';
+        const outOfBed = data.outOfBedTime || actualWake;
+        const targetWake = data.targetWakeTime || '';
+        
+        // Calculate diff (from out of bed time)
+        let diff = '';
+        if (outOfBed && targetWake) {
+          const actual = inputValueToMinutes(outOfBed);
+          const target = inputValueToMinutes(targetWake);
+          if (actual !== null && target !== null) {
+            diff = actual - target;
+          }
+        }
+        
+        // Calculate snooze
+        let snooze = '';
+        if (actualWake && outOfBed) {
+          const wake = inputValueToMinutes(actualWake);
+          const up = inputValueToMinutes(outOfBed);
+          if (wake !== null && up !== null) {
+            snooze = up - wake;
+          }
+        }
+        
+        csv += `${date},${data.day || ''},${(data.phase || 0) + 1},${actualWake},${outOfBed},${targetWake},${diff},${snooze},${habitsCount},${data.sleepQuality || ''},${data.energyLevel || ''}\n`;
+      });
+      
+      return csv;
+    }
+    
+    function generateJSON() {
+      return JSON.stringify({
+        exportDate: new Date().toISOString(),
+        app: 'Dawn - 5am Club',
+        currentState: {
+          day: state.currentDay,
+          phase: getPhase(state.currentDay) + 1,
+          streak: state.streak,
+          targetWake: formatTime(getTargetWake(state.currentDay)),
+          shifted: getPhase(state.currentDay) * CONFIG.shiftPerPhase
+        },
+        history: state.history,
+        startDate: state.startDate
+      }, null, 2);
+    }
+    
+    function exportToWhatsApp() {
+      const report = generateTextReport();
+      const encoded = encodeURIComponent(report);
+      
+      if (navigator.share) {
+        navigator.share({ title: 'Dawn Progress Report', text: report }).catch(() => {
+          window.open(`https://wa.me/?text=${encoded}`, '_blank');
+        });
+      } else {
+        window.open(`https://wa.me/?text=${encoded}`, '_blank');
+      }
+      showToast('Opening WhatsApp...');
+    }
+    
+    function exportToEmail() {
+      const report = generateTextReport();
+      const subject = encodeURIComponent(`Dawn 5am Club Progress - Day ${state.currentDay}`);
+      const body = encodeURIComponent(report);
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      showToast('Opening email...');
+    }
+    
+    function downloadReport(format) {
+      let content, filename, mimeType;
+      
+      switch(format) {
+        case 'csv':
+          content = generateCSV();
+          filename = `dawn-progress-${new Date().toISOString().split('T')[0]}.csv`;
+          mimeType = 'text/csv';
+          break;
+        case 'json':
+          content = generateJSON();
+          filename = `dawn-backup-${new Date().toISOString().split('T')[0]}.json`;
+          mimeType = 'application/json';
+          break;
+        default:
+          content = generateTextReport();
+          filename = `dawn-report-day${state.currentDay}.txt`;
+          mimeType = 'text/plain';
+      }
+      
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      showToast('✓ Downloaded!');
+    }
+    
+    // ========== STORAGE ==========
+    function saveState() {
+      try { localStorage.setItem('dawn-5am', JSON.stringify(state)); } catch(e) {}
+    }
+    
+    function loadState() {
+      try {
+        const saved = localStorage.getItem('dawn-5am');
+        if (saved) state = { ...state, ...JSON.parse(saved) };
+        if (!state.startDate) state.startDate = new Date().toISOString().split('T')[0];
+      } catch(e) {}
+    }
+    
+    // ========== PWA ==========
+    let deferredPrompt;
+    
+    function checkInstall() {
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        document.getElementById('install-banner').classList.remove('hidden');
+      });
+      
+      document.getElementById('install-btn').addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') {
+            document.getElementById('install-banner').classList.add('hidden');
+          }
+          deferredPrompt = null;
+        } else {
+          showToast('Tap Share → Add to Home Screen');
+        }
+      });
+      
+      document.getElementById('install-close').addEventListener('click', () => {
+        document.getElementById('install-banner').classList.add('hidden');
+      });
+      
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        document.getElementById('install-banner').classList.add('hidden');
+      }
+    }
+    
+    function registerSW() {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('dawn-sw.js').catch(() => {});
+      }
+    }
+    
+    // ========== TOAST ==========
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+    
+    // ========== INIT ==========
+    function init() {
+      loadTheme();
+      loadState();
+      updateUI();
+      renderHabitGrid();
+      renderRatings();
+      renderPhaseTimeline();
+      renderLogHistory();
+      setupWakeTimeInput();
+      bindEvents();
+      checkInstall();
+      registerSW();
+    }
+    
+    init();
+  </script>
+</body>
+</html>

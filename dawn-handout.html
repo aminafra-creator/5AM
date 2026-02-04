@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dawn — 5am Club Clinic Handout</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    @page { size: A4; margin: 0; }
+    
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 15mm 20mm;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    @media print {
+      body { background: white; padding: 0; }
+      .page { box-shadow: none; }
+      .no-print { display: none; }
+    }
+    
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 8mm;
+      padding-bottom: 6mm;
+      border-bottom: 2px solid #f59e0b;
+    }
+    
+    .logo {
+      font-size: 56px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .tagline {
+      font-size: 14px;
+      color: #94a3b8;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-top: 2mm;
+    }
+    
+    .clinic-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: #0f172a;
+      padding: 3mm 6mm;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 4mm;
+    }
+    
+    /* Main */
+    .main {
+      display: flex;
+      gap: 10mm;
+      margin: 8mm 0;
+    }
+    
+    .qr-section {
+      flex: 0 0 70mm;
+      text-align: center;
+    }
+    
+    .qr-box {
+      width: 60mm;
+      height: 60mm;
+      border: 3px dashed #f59e0b;
+      border-radius: 8mm;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 4mm;
+      background: rgba(245, 158, 11, 0.1);
+    }
+    
+    .qr-placeholder {
+      font-size: 12px;
+      color: #f59e0b;
+      text-align: center;
+      padding: 10mm;
+    }
+    
+    .scan-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+    }
+    
+    .scan-hint {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2mm;
+    }
+    
+    /* Instructions */
+    .instructions { flex: 1; }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 5mm;
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+    }
+    
+    .section-title span { font-size: 24px; }
+    
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 4mm;
+    }
+    
+    .step {
+      display: flex;
+      gap: 4mm;
+      align-items: flex-start;
+    }
+    
+    .step-num {
+      width: 9mm;
+      height: 9mm;
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: #0f172a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    
+    .step-content h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 1mm;
+    }
+    
+    .step-content p {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+    
+    .platform-help {
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 4mm;
+      padding: 4mm 5mm;
+      margin-top: 5mm;
+    }
+    
+    .platform-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #6366f1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 3mm;
+    }
+    
+    .platform-row {
+      display: flex;
+      gap: 2mm;
+      margin-bottom: 2mm;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    
+    .platform-row:last-child { margin-bottom: 0; }
+    .platform-icon { font-size: 14px; }
+    
+    /* Journey */
+    .journey {
+      margin: 8mm 0;
+      padding: 5mm;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 4mm;
+    }
+    
+    .journey-title {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #f59e0b;
+      margin-bottom: 4mm;
+    }
+    
+    .phases {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 5mm;
+    }
+    
+    .phase {
+      text-align: center;
+    }
+    
+    .phase-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #334155;
+      margin: 0 auto 2mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+    }
+    
+    .phase:first-child .phase-dot { background: #f59e0b; color: #0f172a; }
+    
+    .phase-wake {
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+    }
+    
+    .phase-days {
+      font-size: 10px;
+      color: #64748b;
+      margin-top: 1mm;
+    }
+    
+    /* Habits */
+    .habits {
+      margin: 6mm 0;
+    }
+    
+    .habits-title {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4mm;
+    }
+    
+    .habits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
+    }
+    
+    .habit {
+      text-align: center;
+      padding: 3mm;
+      background: rgba(51, 65, 85, 0.5);
+      border-radius: 3mm;
+    }
+    
+    .habit-icon { font-size: 20px; margin-bottom: 1mm; }
+    .habit-text { font-size: 9px; color: #94a3b8; }
+    
+    /* Footer */
+    .footer {
+      margin-top: 6mm;
+      padding-top: 5mm;
+      border-top: 1px solid #334155;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    
+    .footer-left {
+      font-size: 11px;
+      color: #64748b;
+    }
+    
+    .footer-left strong {
+      display: block;
+      color: white;
+      font-size: 12px;
+      margin-bottom: 1mm;
+    }
+    
+    .privacy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 2mm;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      padding: 2mm 4mm;
+      border-radius: 4mm;
+      font-size: 10px;
+      color: #22c55e;
+      margin-top: 2mm;
+    }
+    
+    .footer-right {
+      text-align: right;
+    }
+    
+    .clinic-contact {
+      font-size: 11px;
+      color: #64748b;
+    }
+    
+    .clinic-contact strong {
+      display: block;
+      font-size: 12px;
+      color: #f59e0b;
+    }
+    
+    /* Print Button */
+    .print-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: #0f172a;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="logo">Dawn</div>
+      <div class="tagline">Join the 5am Club</div>
+      <div class="clinic-badge">Recommended by LH Dental Clinic</div>
+    </div>
+    
+    <div class="main">
+      <div class="qr-section">
+        <div class="qr-box">
+          <div class="qr-placeholder">
+            Generate QR code at:<br><br>
+            <strong>qr-code-generator.com</strong><br><br>
+            Paste your Dawn URL
+          </div>
+        </div>
+        <div class="scan-label">📱 Scan to Install</div>
+        <div class="scan-hint">Use your phone camera</div>
+      </div>
+      
+      <div class="instructions">
+        <div class="section-title"><span>☀️</span> How to Start</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Scan the QR Code</h4>
+              <p>Open your phone camera and point it at the code</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Install Dawn</h4>
+              <p>Add the app to your home screen (free, no app store)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Follow the 15-Day Program</h4>
+              <p>Complete daily habits to shift your wake time by 36 minutes every 3 days</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Share Your Progress</h4>
+              <p>Export your data via WhatsApp or Email</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="platform-help">
+          <div class="platform-title">Installation Help</div>
+          <div class="platform-row">
+            <span class="platform-icon">🍎</span>
+            <span><strong>iPhone:</strong> Open in Safari → Share (⬆️) → "Add to Home Screen"</span>
+          </div>
+          <div class="platform-row">
+            <span class="platform-icon">🤖</span>
+            <span><strong>Android:</strong> Tap "Install" when prompted, or Menu (⋮) → "Add to Home"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="journey">
+      <div class="journey-title">Your 15-Day Journey: 8:00 AM → 5:00 AM</div>
+      <div class="phases">
+        <div class="phase">
+          <div class="phase-dot">1</div>
+          <div class="phase-wake">8:00</div>
+          <div class="phase-days">Days 1-3</div>
+        </div>
+        <div class="phase">
+          <div class="phase-dot">2</div>
+          <div class="phase-wake">7:24</div>
+          <div class="phase-days">Days 4-6</div>
+        </div>
+        <div class="phase">
+          <div class="phase-dot">3</div>
+          <div class="phase-wake">6:48</div>
+          <div class="phase-days">Days 7-9</div>
+        </div>
+        <div class="phase">
+          <div class="phase-dot">4</div>
+          <div class="phase-wake">6:12</div>
+          <div class="phase-days">Days 10-12</div>
+        </div>
+        <div class="phase">
+          <div class="phase-dot">5</div>
+          <div class="phase-wake">5:36</div>
+          <div class="phase-days">Days 13-15</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="habits">
+      <div class="habits-title">9 Daily Habits to Track</div>
+      <div class="habits-grid">
+        <div class="habit">
+          <div class="habit-icon">☀️</div>
+          <div class="habit-text">Morning Light</div>
+        </div>
+        <div class="habit">
+          <div class="habit-icon">⏰</div>
+          <div class="habit-text">No Snooze</div>
+        </div>
+        <div class="habit">
+          <div class="habit-icon">🏃</div>
+          <div class="habit-text">Exercise</div>
+        </div>
+        <div class="habit">
+          <div class="habit-icon">🍳</div>
+          <div class="habit-text">Early Breakfast</div>
+        </div>
+        <div class="habit">
+          <div class="habit-icon">☕</div>
+          <div class="habit-text">No Late Caffeine</div>
+        </div>
+        <div class="habit">
+          <div class="habit-icon">🍽️</div>
+          <div class="habit-text">Early Dinner</div>
+        </div>
+        <div class="habit">
+          <div class="habit-icon">📱</div>
+          <div class="habit-text">Screens Off</div>
+        </div>
+        <div class="habit">
+          <div class="habit-icon">💡</div>
+          <div class="habit-text">Dim Lights</div>
+        </div>
+        <div class="habit">
+          <div class="habit-icon">❄️</div>
+          <div class="habit-text">Cool Room</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <div class="footer-left">
+        <strong>Free • No Account • Works Offline</strong>
+        Your data stays private on your phone
+        <div class="privacy-badge">🔒 You control what you share</div>
+      </div>
+      <div class="footer-right">
+        <div class="clinic-contact">
+          <strong>Questions?</strong>
+          Ask our team at your next visit
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="print-btn no-print" onclick="window.print()">🖨️ Print This Page</button>
+</body>
+</html>
