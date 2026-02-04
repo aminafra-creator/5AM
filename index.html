@@ -773,6 +773,409 @@
     .section { display: none; }
     .section.active { display: block; }
     
+    /* Advanced Section */
+    .card-subtitle {
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    
+    /* Gratitude Journal */
+    .journal-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .journal-tab {
+      flex: 1;
+      padding: 12px;
+      background: var(--bg-tertiary);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      color: var(--text-secondary);
+      font-size: var(--font-base);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .journal-tab.active {
+      background: var(--amber-soft);
+      color: var(--amber);
+      border-color: var(--amber);
+    }
+    
+    .journal-prompt {
+      font-size: var(--font-base);
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    .journal-hint {
+      font-size: var(--font-sm);
+      color: var(--amber);
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+    
+    .gratitude-entries {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .gratitude-entry {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    
+    .entry-num {
+      width: 28px;
+      height: 28px;
+      background: var(--amber-soft);
+      color: var(--amber);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--font-sm);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+    
+    .gratitude-entry textarea {
+      flex: 1;
+      padding: 12px;
+      background: var(--bg-tertiary);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: var(--font-base);
+      font-family: inherit;
+      resize: none;
+      transition: all 0.2s ease;
+    }
+    
+    .gratitude-entry textarea:focus {
+      outline: none;
+      border-color: var(--amber);
+    }
+    
+    body.day-mode .gratitude-entry textarea {
+      background: var(--bg-secondary);
+    }
+    
+    .save-journal-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--amber);
+      border: none;
+      border-radius: 12px;
+      color: var(--bg-primary);
+      font-size: var(--font-base);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .save-journal-btn:active { transform: scale(0.98); }
+    
+    /* Advanced Habits Grid */
+    .advanced-habits-grid {
+      display: grid;
+      gap: 10px;
+    }
+    
+    .advanced-habit {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: var(--bg-tertiary);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .advanced-habit.done {
+      background: var(--green-soft);
+    }
+    
+    .advanced-habit .habit-check {
+      width: 26px;
+      height: 26px;
+      border: 2px solid var(--text-muted);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    
+    .advanced-habit.done .habit-check {
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+    }
+    
+    .advanced-habit .habit-content {
+      flex: 1;
+    }
+    
+    .advanced-habit .habit-name {
+      font-size: var(--font-base);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    .advanced-habit .habit-desc {
+      font-size: var(--font-xs);
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    
+    .advanced-habit .habit-info-btn {
+      width: 28px;
+      height: 28px;
+      background: var(--bg-secondary);
+      border: none;
+      border-radius: 50%;
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Protocol Card */
+    .protocol-card .protocol-content {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    
+    .protocol-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--red);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--font-sm);
+      flex-shrink: 0;
+    }
+    
+    .step-content strong {
+      display: block;
+      font-size: var(--font-base);
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    
+    .step-content p {
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    
+    .protocol-link {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 14px;
+      background: var(--indigo-soft);
+      color: var(--indigo);
+      border-radius: 8px;
+      font-size: var(--font-sm);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    
+    .science-citation {
+      padding: 14px;
+      background: var(--bg-tertiary);
+      border-radius: 12px;
+      font-size: var(--font-sm);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      border-left: 3px solid var(--indigo);
+    }
+    
+    .science-citation strong {
+      color: var(--indigo);
+    }
+    
+    /* Science Topics */
+    .science-topics {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .science-topic-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: var(--bg-tertiary);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+    
+    .science-topic-btn:active {
+      transform: scale(0.98);
+    }
+    
+    .topic-icon {
+      font-size: 22px;
+    }
+    
+    .topic-text {
+      flex: 1;
+      font-size: var(--font-base);
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .topic-arrow {
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+    
+    .sources-text {
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    
+    .sources-text strong {
+      color: var(--text-secondary);
+    }
+    
+    /* Science Modal */
+    .science-modal {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-secondary);
+      border-radius: 24px 24px 0 0;
+      padding: 24px;
+      max-height: 80vh;
+      overflow-y: auto;
+      z-index: 400;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .science-modal.show {
+      transform: translateY(0);
+    }
+    
+    .science-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 350;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .science-modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .science-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .science-modal-icon {
+      font-size: 32px;
+    }
+    
+    .science-modal-title {
+      font-size: var(--font-xl);
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .science-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      background: var(--bg-tertiary);
+      border: none;
+      border-radius: 50%;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+    
+    .science-modal-body {
+      font-size: var(--font-base);
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    .science-modal-body h4 {
+      color: var(--text-primary);
+      font-size: var(--font-lg);
+      margin: 20px 0 10px 0;
+    }
+    
+    .science-modal-body h4:first-child {
+      margin-top: 0;
+    }
+    
+    .science-modal-body ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    
+    .science-modal-body li {
+      margin-bottom: 8px;
+    }
+    
+    .science-modal-body .source {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 10px 14px;
+      background: var(--bg-tertiary);
+      border-radius: 8px;
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+    }
+    
+    .science-modal-body .source strong {
+      color: var(--amber);
+    }
+    
     /* Toast */
     .toast {
       position: fixed;
@@ -1167,6 +1570,181 @@
       </div>
     </div>
     
+    <!-- ADVANCED SECTION -->
+    <div id="advanced-section" class="section">
+      <!-- Gratitude Journal -->
+      <div class="card">
+        <div class="card-label"><div class="dot amber"></div>Gratitude Journal</div>
+        <p class="card-subtitle">3 minutes morning & evening — proven to improve sleep quality</p>
+        
+        <div class="journal-tabs" id="journal-tabs">
+          <button class="journal-tab" id="morning-tab" onclick="showJournalTab('morning')">☀️ Morning</button>
+          <button class="journal-tab" id="evening-tab" onclick="showJournalTab('evening')">🌙 Evening</button>
+        </div>
+        
+        <div id="morning-journal" class="journal-content">
+          <p class="journal-prompt">What are 3 specific things you're grateful for this morning?</p>
+          <p class="journal-hint">Be specific! Not "my family" but "my daughter's laugh when I tickled her last night"</p>
+          <div class="gratitude-entries">
+            <div class="gratitude-entry">
+              <span class="entry-num">1</span>
+              <textarea id="morning-gratitude-1" placeholder="e.g., The warm coffee my wife made me before I woke up" rows="2"></textarea>
+            </div>
+            <div class="gratitude-entry">
+              <span class="entry-num">2</span>
+              <textarea id="morning-gratitude-2" placeholder="e.g., Getting 7 hours of sleep last night" rows="2"></textarea>
+            </div>
+            <div class="gratitude-entry">
+              <span class="entry-num">3</span>
+              <textarea id="morning-gratitude-3" placeholder="e.g., The quiet sunrise view from my balcony" rows="2"></textarea>
+            </div>
+          </div>
+          <button class="save-journal-btn" onclick="saveJournal('morning')">Save Morning Journal</button>
+        </div>
+        
+        <div id="evening-journal" class="journal-content" style="display: none;">
+          <p class="journal-prompt">What are 3 specific things you're grateful for tonight?</p>
+          <p class="journal-hint">Be specific! Not "my health" but "having energy to play football with my son after work"</p>
+          <div class="gratitude-entries">
+            <div class="gratitude-entry">
+              <span class="entry-num">1</span>
+              <textarea id="evening-gratitude-1" placeholder="e.g., My colleague who helped me finish the report on time" rows="2"></textarea>
+            </div>
+            <div class="gratitude-entry">
+              <span class="entry-num">2</span>
+              <textarea id="evening-gratitude-2" placeholder="e.g., The delicious dinner we had together as a family" rows="2"></textarea>
+            </div>
+            <div class="gratitude-entry">
+              <span class="entry-num">3</span>
+              <textarea id="evening-gratitude-3" placeholder="e.g., Learning something new in today's meeting" rows="2"></textarea>
+            </div>
+          </div>
+          <button class="save-journal-btn" onclick="saveJournal('evening')">Save Evening Journal</button>
+        </div>
+      </div>
+      
+      <!-- Advanced Habits -->
+      <div class="card">
+        <div class="card-label"><div class="dot green"></div>Advanced Habits</div>
+        <p class="card-subtitle">Additional protocols from Johnson, Huberman & Attia</p>
+        
+        <div class="advanced-habits-grid" id="advanced-habits-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+      
+      <!-- Wake At Night Protocol -->
+      <div class="card protocol-card">
+        <div class="card-label"><div class="dot red"></div>If You Wake At Night</div>
+        <div class="protocol-content">
+          <div class="protocol-step">
+            <span class="step-num">1</span>
+            <div class="step-content">
+              <strong>Don't check the time</strong>
+              <p>Looking at the clock triggers anxiety about sleep loss</p>
+            </div>
+          </div>
+          <div class="protocol-step">
+            <span class="step-num">2</span>
+            <div class="step-content">
+              <strong>Stay in darkness</strong>
+              <p>If you must move, use only red/orange light</p>
+            </div>
+          </div>
+          <div class="protocol-step">
+            <span class="step-num">3</span>
+            <div class="step-content">
+              <strong>Try NSDR (10-20 min)</strong>
+              <p>Non-Sleep Deep Rest restores energy even without sleep</p>
+              <a href="https://www.youtube.com/results?search_query=huberman+nsdr+10+minutes" target="_blank" class="protocol-link">🎧 Find NSDR Audio</a>
+            </div>
+          </div>
+          <div class="protocol-step">
+            <span class="step-num">4</span>
+            <div class="step-content">
+              <strong>If awake >20 min, get up</strong>
+              <p>Read in dim light until sleepy. Don't train your brain that bed = awake.</p>
+            </div>
+          </div>
+        </div>
+        <div class="science-citation">
+          <strong>The Science:</strong> Huberman recommends NSDR (Yoga Nidra) for night waking. Studies show it activates parasympathetic nervous system, lowering heart rate and cortisol. Even without falling asleep, NSDR provides ~65% of the restorative benefits of actual sleep.
+        </div>
+      </div>
+      
+      <!-- Science Library -->
+      <div class="card">
+        <div class="card-label"><div class="dot indigo"></div>Science Library</div>
+        <p class="card-subtitle">Tap any topic to learn the research behind it</p>
+        
+        <div class="science-topics">
+          <button class="science-topic-btn" onclick="showScience('five-am-club')">
+            <span class="topic-icon">🌅</span>
+            <span class="topic-text">The Science of Waking at 5AM</span>
+            <span class="topic-arrow">→</span>
+          </button>
+          <button class="science-topic-btn" onclick="showScience('twenty-twenty-twenty')">
+            <span class="topic-icon">⏱️</span>
+            <span class="topic-text">The 20/20/20 Formula (Robin Sharma)</span>
+            <span class="topic-arrow">→</span>
+          </button>
+          <button class="science-topic-btn" onclick="showScience('morning-willpower')">
+            <span class="topic-icon">🧠</span>
+            <span class="topic-text">Morning Willpower & Productivity</span>
+            <span class="topic-arrow">→</span>
+          </button>
+          <button class="science-topic-btn" onclick="showScience('caffeine-delay')">
+            <span class="topic-icon">☕</span>
+            <span class="topic-text">Why Delay Morning Caffeine 90min?</span>
+            <span class="topic-arrow">→</span>
+          </button>
+          <button class="science-topic-btn" onclick="showScience('cold-exposure')">
+            <span class="topic-icon">🧊</span>
+            <span class="topic-text">Morning Cold Exposure</span>
+            <span class="topic-arrow">→</span>
+          </button>
+          <button class="science-topic-btn" onclick="showScience('evening-self')">
+            <span class="topic-icon">🧠</span>
+            <span class="topic-text">Evening Self Identity (Bryan Johnson)</span>
+            <span class="topic-arrow">→</span>
+          </button>
+          <button class="science-topic-btn" onclick="showScience('morning-light')">
+            <span class="topic-icon">☀️</span>
+            <span class="topic-text">Morning Light (10,000 lux)</span>
+            <span class="topic-arrow">→</span>
+          </button>
+          <button class="science-topic-btn" onclick="showScience('temperature')">
+            <span class="topic-icon">🌡️</span>
+            <span class="topic-text">Temperature & Sleep</span>
+            <span class="topic-arrow">→</span>
+          </button>
+          <button class="science-topic-btn" onclick="showScience('supplements')">
+            <span class="topic-icon">💊</span>
+            <span class="topic-text">Sleep Supplements Stack</span>
+            <span class="topic-arrow">→</span>
+          </button>
+          <button class="science-topic-btn" onclick="showScience('alcohol')">
+            <span class="topic-icon">🍷</span>
+            <span class="topic-text">Alcohol & Deep Sleep</span>
+            <span class="topic-arrow">→</span>
+          </button>
+          <button class="science-topic-btn" onclick="showScience('gratitude')">
+            <span class="topic-icon">🙏</span>
+            <span class="topic-text">Gratitude & Sleep Quality</span>
+            <span class="topic-arrow">→</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Sources -->
+      <div class="card" style="background: var(--bg-tertiary);">
+        <div class="card-label"><div class="dot"></div>Research Sources</div>
+        <p class="sources-text">
+          Protocols based on research from: <strong>Bryan Johnson</strong> (Blueprint), <strong>Dr. Andrew Huberman</strong> (Stanford Neuroscience), <strong>Dr. Peter Attia</strong> (Longevity Medicine), and <strong>Dr. Matthew Walker</strong> (UC Berkeley Sleep Lab).
+        </p>
+      </div>
+    </div>
+    
     <!-- SHARE SECTION -->
     <div id="share-section" class="section">
       <div class="card">
@@ -1255,6 +1833,10 @@
       <span class="icon">📊</span>
       <span>Journey</span>
     </button>
+    <button class="nav-btn" data-section="advanced">
+      <span class="icon">🧪</span>
+      <span>Advanced</span>
+    </button>
     <button class="nav-btn" data-section="share">
       <span class="icon">📤</span>
       <span>Share</span>
@@ -1297,6 +1879,19 @@
         <button class="modal-btn delete" onclick="deleteLog()">Delete</button>
         <button class="modal-btn save" onclick="saveLog()">Save</button>
       </div>
+    </div>
+  </div>
+  
+  <!-- Science Modal -->
+  <div class="science-modal-overlay" id="science-overlay" onclick="closeScienceModal()"></div>
+  <div class="science-modal" id="science-modal">
+    <button class="science-modal-close" onclick="closeScienceModal()">×</button>
+    <div class="science-modal-header">
+      <span class="science-modal-icon" id="science-icon">☕</span>
+      <h3 class="science-modal-title" id="science-title">Topic</h3>
+    </div>
+    <div class="science-modal-body" id="science-body">
+      <!-- Content populated by JS -->
     </div>
   </div>
 
@@ -1520,17 +2115,370 @@
       { id: 'cool', name: 'Cool Room', icon: '❄️', time: 'evening', impact: 'medium', desc: 'Bedroom at 18-20°C' }
     ];
     
+    const ADVANCED_HABITS = [
+      { id: 'adv_caffeine_delay', name: 'Delay Morning Caffeine 90min', icon: '☕', desc: 'Wait 90-120min after waking for first coffee', scienceKey: 'caffeine-delay' },
+      { id: 'adv_cold', name: 'Cold Exposure AM', icon: '🧊', desc: '1-3 min cold shower after waking', scienceKey: 'cold-exposure' },
+      { id: 'adv_sunset', name: 'Sunset Light Viewing', icon: '🌅', desc: 'Get outside in late afternoon before sunset', scienceKey: 'morning-light' },
+      { id: 'adv_bath', name: 'Warm Bath Before Bed', icon: '🛁', desc: '15-20min warm bath 1-2h before sleep', scienceKey: 'temperature' },
+      { id: 'adv_no_alcohol', name: 'No Alcohol', icon: '🍷', desc: 'Avoid alcohol, especially within 4h of bed', scienceKey: 'alcohol' },
+      { id: 'adv_evening_self', name: 'Evening Self Check', icon: '🧠', desc: 'Recognize evening brain makes poor choices', scienceKey: 'evening-self' }
+    ];
+    
+    const SCIENCE_CONTENT = {
+      'caffeine-delay': {
+        icon: '☕',
+        title: 'Why Delay Caffeine 90 Minutes?',
+        body: `
+          <h4>The Adenosine Problem</h4>
+          <p>When you wake up, your body naturally has elevated <strong>adenosine</strong> (the sleepiness molecule) that accumulated overnight. Your body is designed to clear this naturally in the first 90-120 minutes of waking.</p>
+          
+          <h4>What Caffeine Does</h4>
+          <p>Caffeine works by <strong>blocking adenosine receptors</strong>, not by eliminating adenosine. If you drink coffee immediately upon waking:</p>
+          <ul>
+            <li>The adenosine doesn't get cleared — it just gets blocked temporarily</li>
+            <li>When caffeine wears off (afternoon), all that adenosine comes flooding back</li>
+            <li>This causes the famous "afternoon crash"</li>
+          </ul>
+          
+          <h4>The Protocol</h4>
+          <p>Wait 90-120 minutes after waking before your first caffeine. This allows:</p>
+          <ul>
+            <li>Natural adenosine clearance via cortisol awakening response</li>
+            <li>Smoother, more sustained energy throughout the day</li>
+            <li>No afternoon crash</li>
+          </ul>
+          
+          <div class="source"><strong>Source:</strong> Dr. Andrew Huberman, Stanford Neuroscience Lab</div>
+        `
+      },
+      'cold-exposure': {
+        icon: '🧊',
+        title: 'Morning Cold Exposure',
+        body: `
+          <h4>The Temperature Wake Signal</h4>
+          <p>Your body wakes up when core temperature <strong>rises</strong>. Cold exposure triggers a powerful compensatory heat response that:</p>
+          <ul>
+            <li>Spikes <strong>norepinephrine</strong> by 200-300% (immediate alertness)</li>
+            <li>Increases <strong>dopamine</strong> by 250% (sustained for hours)</li>
+            <li>Raises core body temperature</li>
+          </ul>
+          
+          <h4>Circadian Benefit</h4>
+          <p>Raising body temperature in the morning helps <strong>anchor your circadian rhythm</strong>. Your body learns that cold = morning = time to be awake. This makes falling asleep easier at night.</p>
+          
+          <h4>The Protocol</h4>
+          <ul>
+            <li>End your shower with 30 seconds to 3 minutes of cold water</li>
+            <li>Temperature should be uncomfortable but safe</li>
+            <li>Best done within first hour of waking</li>
+          </ul>
+          
+          <div class="source"><strong>Source:</strong> Dr. Andrew Huberman, Huberman Lab Podcast</div>
+        `
+      },
+      'evening-self': {
+        icon: '🧠',
+        title: 'Evening Self Identity Protocol',
+        body: `
+          <h4>Bryan Johnson's Discovery</h4>
+          <p>Bryan Johnson realized his <strong>evening self</strong> made terrible decisions. Late-night eating, screen time, staying up "just 15 more minutes" — all sabotaging his sleep and health.</p>
+          
+          <h4>The Split Identity Approach</h4>
+          <p>Johnson literally <strong>"fired" his evening self</strong> by recognizing it as a separate entity with different motivations:</p>
+          <ul>
+            <li>"Evening Bryan" wants short-term pleasure</li>
+            <li>"Morning Bryan" pays the consequences</li>
+            <li>Evening Bryan is persuasive: "Just tonight..." or "You deserve this..."</li>
+          </ul>
+          
+          <h4>The Protocol</h4>
+          <ul>
+            <li>Recognize that after 7 PM, your willpower is depleted</li>
+            <li>Make rules that don't require willpower (e.g., kitchen closes at 6 PM)</li>
+            <li>Set up your environment earlier in the day</li>
+            <li>When tempted, ask: "Is Evening Me making this decision?"</li>
+          </ul>
+          
+          <div class="source"><strong>Source:</strong> Bryan Johnson, Blueprint Protocol</div>
+        `
+      },
+      'morning-light': {
+        icon: '☀️',
+        title: 'Morning Light (10,000 lux)',
+        body: `
+          <h4>The Master Clock</h4>
+          <p>Your brain has a <strong>suprachiasmatic nucleus (SCN)</strong> — the master circadian clock. It sets the timing for every system in your body: hormones, metabolism, alertness, and sleep.</p>
+          
+          <h4>Why Light Matters</h4>
+          <p>The SCN is primarily set by <strong>light entering your eyes</strong>. Specialized cells (melanopsin ganglion cells) respond to bright light, especially at low solar angle (sunrise/sunset).</p>
+          <ul>
+            <li>Indoor light: 300-500 lux (too dim)</li>
+            <li>Overcast day: 10,000+ lux (sufficient)</li>
+            <li>Sunny day: 50,000-100,000 lux</li>
+          </ul>
+          
+          <h4>The Protocol</h4>
+          <ul>
+            <li>Get outside within 30-60 minutes of waking</li>
+            <li>10-15 min on sunny days, 20-30 min on cloudy days</li>
+            <li>No sunglasses (regular glasses/contacts OK)</li>
+            <li>If waking before sunrise, use 10,000 lux light box for 3-5 min</li>
+          </ul>
+          
+          <h4>Evening Light Too</h4>
+          <p>A second exposure before sunset signals to your brain that night is coming, preparing melatonin release.</p>
+          
+          <div class="source"><strong>Sources:</strong> Dr. Andrew Huberman, Dr. Satchin Panda</div>
+        `
+      },
+      'temperature': {
+        icon: '🌡️',
+        title: 'Temperature & Sleep',
+        body: `
+          <h4>The 1-3°F Rule</h4>
+          <p>Your body <strong>must drop 1-3°F (0.5-1.5°C)</strong> in core temperature to initiate sleep. This is non-negotiable biology.</p>
+          
+          <h4>Optimal Bedroom Temperature</h4>
+          <ul>
+            <li>Target: 60-67°F (15-19°C)</li>
+            <li>Most people keep rooms too warm</li>
+            <li>Cooler is better for deep sleep</li>
+          </ul>
+          
+          <h4>The Warm Bath Paradox</h4>
+          <p>A warm bath 1-2 hours before bed <strong>actually helps you cool down</strong>:</p>
+          <ul>
+            <li>Warm water dilates blood vessels</li>
+            <li>Blood flows to skin surface</li>
+            <li>When you get out, heat radiates away rapidly</li>
+            <li>Core temperature drops faster than normal</li>
+          </ul>
+          
+          <h4>Peter Attia's Protocol</h4>
+          <p>15-minute sauna at 198°F, followed by cool-down, 1-2 hours before bed. Reported significant improvements in sleep quality.</p>
+          
+          <div class="source"><strong>Sources:</strong> Dr. Peter Attia, Dr. Matthew Walker</div>
+        `
+      },
+      'supplements': {
+        icon: '💊',
+        title: 'Sleep Supplements Stack',
+        body: `
+          <h4>Tier 1: The Foundation (Start Here)</h4>
+          <p><strong>Magnesium Threonate (145mg)</strong></p>
+          <ul>
+            <li>Crosses blood-brain barrier better than other forms</li>
+            <li>Promotes relaxation and GABA activity</li>
+            <li>Many people are deficient</li>
+          </ul>
+          
+          <p><strong>L-Theanine (100-400mg)</strong></p>
+          <ul>
+            <li>Promotes calm without sedation</li>
+            <li>Found naturally in tea</li>
+            <li>Can cause vivid dreams in some people</li>
+          </ul>
+          
+          <h4>Tier 2: Additional Support</h4>
+          <p><strong>Apigenin (50mg)</strong></p>
+          <ul>
+            <li>Derived from chamomile</li>
+            <li>Mild sedative effect</li>
+            <li>Part of Huberman's stack</li>
+          </ul>
+          
+          <p><strong>Glycine (2-3g)</strong></p>
+          <ul>
+            <li>Inhibitory neurotransmitter</li>
+            <li>Shortens time to fall asleep</li>
+            <li>Peter Attia uses this</li>
+          </ul>
+          
+          <h4>Important Notes</h4>
+          <ul>
+            <li>Start with ONE supplement, add gradually</li>
+            <li>Take 30-60 minutes before bed</li>
+            <li>Melatonin: use sparingly (0.5-1mg max)</li>
+          </ul>
+          
+          <div class="source"><strong>Sources:</strong> Dr. Andrew Huberman, Dr. Peter Attia</div>
+        `
+      },
+      'alcohol': {
+        icon: '🍷',
+        title: 'Alcohol & Deep Sleep',
+        body: `
+          <h4>The Neuroscience</h4>
+          <p>Alcohol is a <strong>sedative</strong>, not a sleep aid. This distinction is critical. Sedation and natural sleep are neurologically different states.</p>
+          
+          <h4>How Alcohol Disrupts Sleep Architecture</h4>
+          <ul>
+            <li><strong>Blocks REM sleep:</strong> Alcohol suppresses rapid eye movement sleep, which is essential for memory consolidation and emotional processing</li>
+            <li><strong>Fragments sleep cycles:</strong> Alcohol metabolizes into aldehydes that trigger repeated micro-awakenings (often unremembered)</li>
+            <li><strong>Disrupts glymphatic clearance:</strong> The brain's waste-removal system operates during deep sleep; alcohol impairs this detoxification process</li>
+            <li><strong>Inhibits vasopressin:</strong> This anti-diuretic hormone gets blocked, causing nighttime urination and dehydration</li>
+          </ul>
+          
+          <h4>Research Findings</h4>
+          <p><strong>Bryan Johnson's WHOOP data:</strong> Deep sleep reduced by approximately 80% on nights with alcohol consumption.</p>
+          <p><strong>Dr. Matthew Walker's research (UC Berkeley):</strong> Even moderate drinking (2 drinks) several hours before bed significantly reduces sleep quality metrics and next-day cognitive performance.</p>
+          <p><strong>2018 JMIR Mental Health study:</strong> Even low alcohol consumption (1-2 drinks) decreased sleep quality by 9.3%; moderate consumption decreased it by 24%; high consumption by 39.2%.</p>
+          
+          <h4>The Protocol</h4>
+          <ul>
+            <li>For optimal sleep: eliminate alcohol entirely</li>
+            <li>If consuming: limit to 1 drink, finish 4+ hours before bed</li>
+            <li>Track with a wearable to see your personal response</li>
+          </ul>
+          
+          <div class="source"><strong>Sources:</strong> Dr. Matthew Walker (Why We Sleep), Bryan Johnson (Blueprint), JMIR Mental Health 2018</div>
+        `
+      },
+      'gratitude': {
+        icon: '🙏',
+        title: 'Gratitude & Sleep Quality',
+        body: `
+          <h4>The Research</h4>
+          <p>Multiple studies show that a <strong>gratitude practice before bed</strong> significantly improves sleep quality:</p>
+          <ul>
+            <li>2009 study: Grateful people slept longer and felt more refreshed</li>
+            <li>2011 study: Pre-sleep gratitude reduced time to fall asleep</li>
+            <li>Mechanism: Shifts focus from worry to positive thoughts</li>
+          </ul>
+          
+          <h4>Why It Works</h4>
+          <p>Anxiety and worry activate the <strong>sympathetic nervous system</strong> (fight or flight). Gratitude activates the <strong>parasympathetic system</strong> (rest and digest).</p>
+          <ul>
+            <li>Lowers cortisol (stress hormone)</li>
+            <li>Increases oxytocin (bonding hormone)</li>
+            <li>Reduces rumination (repetitive negative thoughts)</li>
+          </ul>
+          
+          <h4>The Protocol</h4>
+          <ul>
+            <li>Write 3 things you're grateful for</li>
+            <li>Be specific (not just "family" but "my daughter's laugh at dinner")</li>
+            <li>Elaborate briefly on WHY you're grateful</li>
+            <li>3 minutes is enough — consistency beats duration</li>
+          </ul>
+          
+          <div class="source"><strong>Sources:</strong> UC Berkeley Greater Good Science Center, Dr. Robert Emmons</div>
+        `
+      },
+      'five-am-club': {
+        icon: '🌅',
+        title: 'The Science of Waking at 5AM',
+        body: `
+          <h4>Why 5AM?</h4>
+          <p>Robin Sharma, author of <em>The 5AM Club</em>, spent 20+ years coaching billionaires and elite performers. His key finding: <strong>"The way you begin your day sets up the way you live your day."</strong></p>
+          
+          <h4>The Neuroscience of Early Rising</h4>
+          <ul>
+            <li><strong>Prefrontal cortex peaks:</strong> Your brain's CEO (decision-making, focus, willpower) is strongest in the first 2-3 hours after waking</li>
+            <li><strong>Willpower is finite:</strong> Research shows willpower depletes throughout the day ("ego depletion"). Morning = full tank</li>
+            <li><strong>Zero interruptions:</strong> No emails, calls, or demands at 5AM. You own this time completely</li>
+            <li><strong>Cortisol awakening response:</strong> Natural cortisol spike at dawn enhances alertness and focus</li>
+          </ul>
+          
+          <h4>Research Findings</h4>
+          <p><strong>University of Toronto:</strong> People make better decisions in the morning hours.</p>
+          <p><strong>Harvard sleep researcher Dr. Charles Czeisler:</strong> Consistent sleep schedules improve cognitive performance by 20-30%.</p>
+          <p><strong>University College London:</strong> Habits take an average of 66 days to become automatic.</p>
+          
+          <h4>Famous Early Risers</h4>
+          <p>Mozart, Frank Lloyd Wright, Ernest Hemingway, Tim Cook (Apple), and countless elite performers all leveraged the morning hours.</p>
+          
+          <div class="source"><strong>Sources:</strong> Robin Sharma (The 5AM Club), University of Toronto, Harvard Medical School</div>
+        `
+      },
+      'twenty-twenty-twenty': {
+        icon: '⏱️',
+        title: 'The 20/20/20 Formula',
+        body: `
+          <h4>Robin Sharma's Victory Hour</h4>
+          <p>The 20/20/20 formula divides your first hour into three powerful 20-minute blocks:</p>
+          
+          <h4>5:00-5:20 AM — MOVE (Exercise)</h4>
+          <p>Vigorous exercise to <strong>sweat</strong>. The goal is triggering specific neurochemical changes:</p>
+          <ul>
+            <li><strong>BDNF release:</strong> Brain-Derived Neurotrophic Factor repairs brain cells and accelerates new neural connections</li>
+            <li><strong>Cortisol reduction:</strong> Sweat eliminates the stress hormone</li>
+            <li><strong>Dopamine + serotonin:</strong> Boosts mood and inspiration</li>
+            <li><strong>Norepinephrine:</strong> Enhances focus and attention</li>
+          </ul>
+          
+          <h4>5:20-5:40 AM — REFLECT (Stillness)</h4>
+          <p>Meditation, journaling, prayer, or quiet contemplation:</p>
+          <ul>
+            <li>Activates parasympathetic nervous system</li>
+            <li>Increases prefrontal cortex gray matter (Harvard study: 8 weeks of meditation)</li>
+            <li>Connects you to your "four interior empires": mindset, heartset, healthset, soulset</li>
+          </ul>
+          
+          <h4>5:40-6:00 AM — GROW (Learning)</h4>
+          <p>Read, study, review goals, or learn a new skill:</p>
+          <ul>
+            <li>Morning learning = better retention (hippocampus most receptive)</li>
+            <li>1% daily improvement = 365% growth per year (compound effect)</li>
+            <li>This is "sharpening the saw" before the world demands your attention</li>
+          </ul>
+          
+          <div class="source"><strong>Source:</strong> Robin Sharma, The 5AM Club: Own Your Morning, Elevate Your Life</div>
+        `
+      },
+      'morning-willpower': {
+        icon: '🧠',
+        title: 'Morning Willpower & Productivity',
+        body: `
+          <h4>The Prefrontal Cortex Advantage</h4>
+          <p>Your prefrontal cortex — responsible for decision-making, planning, focus, and self-control — operates at <strong>peak capacity in the morning</strong>.</p>
+          
+          <h4>Sleep Inertia: The First 30 Minutes</h4>
+          <p>Research shows your brain operates at only <strong>51% capacity</strong> for approximately 30 minutes after waking. This is why:</p>
+          <ul>
+            <li>Don't make important decisions immediately upon waking</li>
+            <li>Use this time for automatic routines (not willpower-heavy tasks)</li>
+            <li>Light exposure and movement accelerate the wake-up process</li>
+          </ul>
+          
+          <h4>Ego Depletion: Why Evenings Are Hard</h4>
+          <p>Psychologist Roy Baumeister's research shows willpower is a <strong>finite resource</strong> that depletes throughout the day:</p>
+          <ul>
+            <li>Every decision drains your willpower tank</li>
+            <li>By evening, your self-control is at its lowest</li>
+            <li>This is why diet failures, impulse purchases, and bad decisions cluster in the evening</li>
+          </ul>
+          
+          <h4>The Implication: "Eat the Frog"</h4>
+          <p>Brian Tracy's principle: <strong>Do your hardest task first</strong> (when willpower is highest).</p>
+          <ul>
+            <li>Writer? Write the hardest section first.</li>
+            <li>Developer? Tackle the toughest bug first.</li>
+            <li>Student? Study the hardest subject first.</li>
+          </ul>
+          <p>After your "frog," the rest of the day feels easier.</p>
+          
+          <div class="source"><strong>Sources:</strong> Roy Baumeister (Willpower), Brian Tracy (Eat That Frog), University of Toronto</div>
+        `
+      }
+    };
+    
     // ========== STATE ==========
     let state = {
       currentDay: 1,
       streak: 0,
       habits: {},
+      advancedHabits: {},
       sleepQuality: 0,
       energyLevel: 0,
       actualWakeTime: '',
       outOfBedTime: '',
       history: {},
-      startDate: null
+      startDate: null,
+      journal: {
+        morning: ['', '', ''],
+        evening: ['', '', '']
+      }
     };
     
     // ========== HELPERS ==========
@@ -2092,6 +3040,8 @@
         const saved = localStorage.getItem('dawn-5am');
         if (saved) state = { ...state, ...JSON.parse(saved) };
         if (!state.startDate) state.startDate = new Date().toISOString().split('T')[0];
+        if (!state.advancedHabits) state.advancedHabits = {};
+        if (!state.journal) state.journal = {};
       } catch(e) {}
     }
     
@@ -2141,6 +3091,108 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
     
+    // ========== ADVANCED TAB FUNCTIONS ==========
+    
+    function renderAdvancedHabits() {
+      const grid = document.getElementById('advanced-habits-grid');
+      if (!grid) return;
+      
+      grid.innerHTML = ADVANCED_HABITS.map(habit => {
+        const isDone = state.advancedHabits[habit.id];
+        return `
+          <div class="advanced-habit ${isDone ? 'done' : ''}" onclick="toggleAdvancedHabit('${habit.id}')">
+            <div class="habit-check">${isDone ? '✓' : ''}</div>
+            <div class="habit-content">
+              <div class="habit-name">${habit.icon} ${habit.name}</div>
+              <div class="habit-desc">${habit.desc}</div>
+            </div>
+            <button class="habit-info-btn" onclick="event.stopPropagation(); showScience('${habit.scienceKey}')">?</button>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    function toggleAdvancedHabit(id) {
+      state.advancedHabits[id] = !state.advancedHabits[id];
+      saveState();
+      renderAdvancedHabits();
+    }
+    
+    // ========== GRATITUDE JOURNAL ==========
+    
+    function initJournalTab() {
+      // Auto-select tab based on time of day
+      // Morning: 5am - 12pm, Evening: 12pm onwards
+      const hour = new Date().getHours();
+      const tab = (hour >= 5 && hour < 12) ? 'morning' : 'evening';
+      showJournalTab(tab);
+    }
+    
+    function showJournalTab(tab) {
+      // Update tabs
+      document.getElementById('morning-tab').classList.remove('active');
+      document.getElementById('evening-tab').classList.remove('active');
+      document.getElementById(`${tab}-tab`).classList.add('active');
+      
+      // Update content
+      document.getElementById('morning-journal').style.display = tab === 'morning' ? 'block' : 'none';
+      document.getElementById('evening-journal').style.display = tab === 'evening' ? 'block' : 'none';
+    }
+    
+    function loadJournal() {
+      const today = new Date().toISOString().split('T')[0];
+      const todayJournal = state.journal[today] || { morning: ['', '', ''], evening: ['', '', ''] };
+      
+      // Load morning entries
+      for (let i = 1; i <= 3; i++) {
+        const el = document.getElementById(`morning-gratitude-${i}`);
+        if (el) el.value = todayJournal.morning[i-1] || '';
+      }
+      
+      // Load evening entries
+      for (let i = 1; i <= 3; i++) {
+        const el = document.getElementById(`evening-gratitude-${i}`);
+        if (el) el.value = todayJournal.evening[i-1] || '';
+      }
+    }
+    
+    function saveJournal(timeOfDay) {
+      const today = new Date().toISOString().split('T')[0];
+      
+      if (!state.journal[today]) {
+        state.journal[today] = { morning: ['', '', ''], evening: ['', '', ''] };
+      }
+      
+      const entries = [];
+      for (let i = 1; i <= 3; i++) {
+        const el = document.getElementById(`${timeOfDay}-gratitude-${i}`);
+        entries.push(el ? el.value : '');
+      }
+      
+      state.journal[today][timeOfDay] = entries;
+      saveState();
+      showToast(`✓ ${timeOfDay.charAt(0).toUpperCase() + timeOfDay.slice(1)} journal saved`);
+    }
+    
+    // ========== SCIENCE MODAL ==========
+    
+    function showScience(key) {
+      const content = SCIENCE_CONTENT[key];
+      if (!content) return;
+      
+      document.getElementById('science-icon').textContent = content.icon;
+      document.getElementById('science-title').textContent = content.title;
+      document.getElementById('science-body').innerHTML = content.body;
+      
+      document.getElementById('science-overlay').classList.add('show');
+      document.getElementById('science-modal').classList.add('show');
+    }
+    
+    function closeScienceModal() {
+      document.getElementById('science-overlay').classList.remove('show');
+      document.getElementById('science-modal').classList.remove('show');
+    }
+    
     // ========== INIT ==========
     function init() {
       loadTheme();
@@ -2150,6 +3202,9 @@
       renderRatings();
       renderPhaseTimeline();
       renderLogHistory();
+      renderAdvancedHabits();
+      loadJournal();
+      initJournalTab();
       setupWakeTimeInput();
       bindEvents();
       checkInstall();
